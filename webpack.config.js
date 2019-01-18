@@ -56,8 +56,5 @@ module.exports = {
         new HtmlWebpackPlugin({
             template:'index.html'
         })
-    ],
-    devServer: {
-        // contentBase: __dirname
-    }
+    ]
 }
