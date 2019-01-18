@@ -1,6 +1,8 @@
 
 $primary-color-dark:#343434;
-$primary-color-light:#f7f7f7;
+// $primary-color-dark:red;
+// $primary-color-light:#f7f7f7;
+$primary-color-light:rgb(249,249,249);
 
 
 $header-height:40px;
@@ -8,11 +10,11 @@ $header-height:40px;
 *{
     padding:0;
     margin:0;
+    box-sizing:border-box;
 }
 
 ul, li {
     list-style:none;
-    
 }
 
 a{
@@ -35,9 +37,10 @@ body{
     font-weight: 500;
     color:$primary-color-dark;
     background-color:$primary-color-light;
-    height:100vh;
+    
     width:100vw;
     overflow:hidden;
+
 }
 
 .text-logo{
@@ -53,7 +56,15 @@ body{
 }
 
 .header{
-    height:$header-height;
+    // height:$header-height;
+    position:absolute;
+    z-index:100;
+    width:100%;
+    background-color:$primary-color-light;
+
+    &__container{
+
+    }
 }
 .nav{
     display:inline-block;
@@ -95,7 +106,7 @@ body{
 }
 
 .intro-page{
-    height:calc(100vh - #{$header-height});
+    height:100vh;
 
     &__left-box{
         height:100%;
@@ -114,9 +125,10 @@ body{
 
         // background-color:red;
     }
+
     &__text{
         position:absolute;
-        top:50%;
+        top:40%;
         left:50%;
         transform:translate(-50%,-50%);
     }

@@ -4,97 +4,135 @@ import Matter from 'matter-js';
 
 
 
+window.onload = function () {
 
-// module aliases
-var Engine = Matter.Engine,
-    Render = Matter.Render,
-    World = Matter.World,
-    Bodies = Matter.Bodies,
-    Body = Matter.Body;
+    var boxes = [];
+    var titleElement = document.getElementById("intro-text");
+    var canvas = document.getElementById("box");
 
-// create an engine
-var engine = Engine.create();
+    // module aliases
+    var Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies,
+        Body = Matter.Body;
 
-var elm = document.getElementById("box");
-var width = elm.offsetWidth;
-var height = elm.offsetHeight;
-
-// create a renderer
-var render = Render.create({
-    element: elm,
-    engine: engine,
-    options:{
-        width:width,
-        height:height,
-        pixelRatio:1,
-        background: '#343434',
-        // wireframeBackground: '#343434',
-        wireframes: false
-    }
-});
-
-// create two boxes and a ground
+    // create an engine
+    var engine = Engine.create();
 
 
-function generateBody(){
-    var a = Math.floor(Math.random()*500);
-    var b = Math.floor(Math.random()*500);
-    var c = Math.floor(Math.random()*100);
-    var d = Math.floor(Math.random()*100);
-    var box = Bodies.rectangle(a, b, c, d);    
-    return box;
-}
-var aaa = [];
+    // create a renderer
+    var render = Render.create({
+        element: canvas,
+        engine: engine,
+        options: {
+            width: canvas.offsetWidth,
+            height: canvas.offsetHeight,
+            pixelRatio: 1,
+            background: 'transparent',
+            wireframes: false,
+            // showPositions: true
+        }
+    });
+
+    var bottomWall = Bodies.rectangle(canvas.offsetWidth*0.5, canvas.offsetHeight+250, canvas.offsetWidth, 500, { isStatic: true });
+    var leftWall = Bodies.rectangle(-250, canvas.offsetHeight*0.5, 500, canvas.offsetHeight, { isStatic: true });
+    var rightWall = Bodies.rectangle(canvas.offsetWidth+250, canvas.offsetHeight*0.5, 500, canvas.offsetHeight, { isStatic: true });
+
+    boxes.push(rightWall);
+    boxes.push(leftWall);
+    boxes.push(bottomWall);
 
 
-for(var i=0;i<70;i++){
+    var minusPadding = titleElement.offsetHeight*0.3;
+    var titleBox = Bodies.rectangle(getCenterOffset(titleElement).left, getCenterOffset(titleElement).top, titleElement.offsetWidth, titleElement.offsetHeight-minusPadding, {
+        isStatic: true,
+        render: {
+             fillStyle:'transparent'
+        }
+    });
 
-    aaa.push(generateBody());
-}
-
-
-var ground = Bodies.rectangle(0, height, width*2, 120, { isStatic: true });
-var text1 = document.getElementById("intro-text");
-
-var textwidth = text1.offsetWidth;
-var textheight = text1.offsetHeight;
-
-var textBox = Bodies.rectangle(getOffset(text1).left*1.8,getOffset(text1).top*1.03 , textwidth, textheight,{
-     isStatic: true ,
-     fillStyle: 'red',
-     strokeStyle: 'blue',
-}); 
-
-
-// alert('')
-aaa.push(textBox);
-aaa.push(ground);
-// var boxA = Bodies.rectangle(50, 50, 60, 50);
-// var boxB = Bodies.rectangle(200, 60, 50, 60);
-// var boxC = Bodies.rectangle(400, 70, 50, 20);
-// var boxD = Bodies.rectangle(300, 20, 30, 50);
-// var ground = Bodies.rectangle(0, height, width*3, 60, { isStatic: true });
-
-// add all of the bodies to the world
-World.add(engine.world, aaa);
-
-
-
-// run the engine
-Engine.run(engine);
-
-// run the renderer
-Render.run(render);
-
-document.body.addEventListener("click", function(){
-    Body.scale(ground, 0.8, 0.8);
-})
+    boxes.push(titleBox);
     
+    
+    var pointBox = Bodies.rectangle(100,-100, 50,50, {
+        isStatic: true,
+        render: {
+            fillStyle:'black'
+        }
+    });
+    
+    boxes.push(pointBox);
 
-function getOffset(el) {
+    for (var i = 0; i < 50; i++) {
+        boxes.push(generateBody());
+    }
+
+    World.add(engine.world, boxes);
+
+    // run the engine
+    Engine.run(engine);
+
+    // run the renderer
+    Render.run(render);
+
+    function generateBody() {
+        var a = Math.floor(Math.random() * 500);
+        var b = Math.floor(Math.random() * -500);
+        var c = Math.floor(Math.random() * 50+50);
+        var d = Math.floor(Math.random() * 50+50);
+        var box = Bodies.rectangle(a, b, c, d,{
+            render:{
+                
+                fillStyle:getComputedStyle(titleElement)['color']
+                // fillStyle:'rgb(110,219,155)'
+            }
+        });
+        return box;
+    }
+
+    
+    document.body.addEventListener("click", function () {
+        // Body.scale(bottomWall, 1, 30);
+    })
+
+    setTimeout(()=>{
+        Body.set(pointBox,"isStatic",false);
+    },7000)
+
+    window.addEventListener("resize", function(){
+        render.canvas.width=canvas.offsetWidth;
+        render.canvas.height=canvas.offsetHeight;
+
+        Body.setPosition(bottomWall,{x:canvas.offsetWidth*0.5, y:canvas.offsetHeight+250});
+        Body.setPosition(rightWall,{x:canvas.offsetWidth+250, y:canvas.offsetHeight*0.5});
+        Body.setPosition(titleBox,{x:getCenterOffset(titleElement).left, y:getCenterOffset(titleElement).top});
+        
+    
+        var minusPadding = titleElement.offsetHeight*0.3;
+        // Body.scale(titleBox,1.1,1.1);
+
+
+        // canvas.height = window.innerHeight;
+    });
+
+}
+
+function getCenterOffset(el) {
     const rect = el.getBoundingClientRect();
+
     return {
-      left: rect.left + window.scrollX,
-      top: rect.top + window.scrollY
+        top: (rect.top + window.pageYOffset)+(el.offsetHeight*0.5),
+        left: (rect.left + window.pageXOffset)+(el.offsetWidth*0.5),
     };
-  }
+}
+
+
+function getElementOffset(el) {
+    const rect = el.getBoundingClientRect();
+
+    return {
+        top: rect.top + window.pageYOffset,
+        left: rect.left + window.pageXOffset,
+    };
+}
