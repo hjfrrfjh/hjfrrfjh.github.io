@@ -28,8 +28,8 @@ var render = Render.create({
         height:height,
         pixelRatio:1,
         background: '#343434',
-        wireframeBackground: '#343434',
-
+        // wireframeBackground: '#343434',
+        wireframes: false
     }
 });
 
@@ -46,9 +46,7 @@ function generateBody(){
 }
 var aaa = [];
 
-var first = Bodies.rectangle(0,0,100,100, { isStatic: true });
 
-aaa.push(first);
 for(var i=0;i<70;i++){
 
     aaa.push(generateBody());
@@ -58,7 +56,16 @@ for(var i=0;i<70;i++){
 var ground = Bodies.rectangle(0, height, width*2, 120, { isStatic: true });
 var text1 = document.getElementById("intro-text");
 
-var textBox = Bodies.rectangle(getOffset(text1).left,getOffset(text1).top , 500, 100,{ isStatic: true }); 
+var textwidth = text1.offsetWidth;
+var textheight = text1.offsetHeight;
+
+var textBox = Bodies.rectangle(getOffset(text1).left*1.8,getOffset(text1).top*1.03 , textwidth, textheight,{
+     isStatic: true ,
+     fillStyle: 'red',
+     strokeStyle: 'blue',
+}); 
+
+
 // alert('')
 aaa.push(textBox);
 aaa.push(ground);
