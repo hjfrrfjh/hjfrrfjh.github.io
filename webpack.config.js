@@ -1,6 +1,5 @@
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-var path = require('path');
 
 module.exports = {
     mode:"development",
@@ -56,5 +55,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template:'index.html'
         })
-    ]
+    ],
+    devServer:{
+        publicPath:"/dist/"
+    }
 }

@@ -10,6 +10,10 @@ window.onload = function () {
     var titleElement = document.getElementById("intro-text");
     var canvas = document.getElementById("box");
 
+    var prevHeight = window.innerHeight;
+    var prevWidth = window.innerWidth;
+    var prevTitleSize= {width:titleElement.offsetWidth, height:titleElement.offsetHeight};
+
     // module aliases
     var Engine = Matter.Engine,
         Render = Matter.Render,
@@ -26,7 +30,7 @@ window.onload = function () {
         element: canvas,
         engine: engine,
         options: {
-            width: canvas.offsetWidth,
+            width: window.innerWidth,
             height: canvas.offsetHeight,
             pixelRatio: 1,
             background: 'transparent',
@@ -37,7 +41,12 @@ window.onload = function () {
 
     var bottomWall = Bodies.rectangle(canvas.offsetWidth*0.5, canvas.offsetHeight+250, canvas.offsetWidth, 500, { isStatic: true });
     var leftWall = Bodies.rectangle(-250, canvas.offsetHeight*0.5, 500, canvas.offsetHeight, { isStatic: true });
-    var rightWall = Bodies.rectangle(canvas.offsetWidth+250, canvas.offsetHeight*0.5, 500, canvas.offsetHeight, { isStatic: true });
+    var rightWall = Bodies.rectangle(canvas.offsetWidth+250, canvas.offsetHeight*0.5, 500, canvas.offsetHeight, { 
+        isStatic: true,
+        render:{
+            visible:false
+        }
+    });
 
     boxes.push(rightWall);
     boxes.push(leftWall);
@@ -101,19 +110,24 @@ window.onload = function () {
     },7000)
 
     window.addEventListener("resize", function(){
-        render.canvas.width=canvas.offsetWidth;
-        render.canvas.height=canvas.offsetHeight;
+        // 캔버스위치 다시설정
+        // render.canvas.width=canvas.offsetWidth;
+        // render.canvas.height=canvas.offsetHeight;
 
+        // 벽위치 조정
         Body.setPosition(bottomWall,{x:canvas.offsetWidth*0.5, y:canvas.offsetHeight+250});
         Body.setPosition(rightWall,{x:canvas.offsetWidth+250, y:canvas.offsetHeight*0.5});
         Body.setPosition(titleBox,{x:getCenterOffset(titleElement).left, y:getCenterOffset(titleElement).top});
         
-    
-        var minusPadding = titleElement.offsetHeight*0.3;
-        // Body.scale(titleBox,1.1,1.1);
-
-
-        // canvas.height = window.innerHeight;
+        
+        // 바닥, 텍스트오브젝트 크기조정
+        Body.scale(bottomWall,window.innerWidth/prevWidth,1);
+        Body.scale(titleBox,titleElement.offsetWidth/prevTitleSize.width,titleElement.offsetHeight/prevTitleSize.height);
+        
+        // 현재크기 저장
+        prevWidth = window.innerWidth;
+        prevTitleSize.width = titleElement.offsetWidth;
+        prevTitleSize.height = titleElement.offsetHeight;
     });
 
 }
