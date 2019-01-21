@@ -1,42 +1,58 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<!-- <link rel="stylesheet" type="text/css" href="css/common.css"> -->
+<html style="opacity: 0" id="html">
 
-		<meta charset="utf-8"> 
-	</head>
-	<body>
-		<div class="intro-page clearfix">
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="css/common.css"> -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>WEBPublisher KIMHYOJIN</title>
+
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+</head>
+
+<body>
 		<header class="header">
-			<div class="header__container">
-				<a href="index.html" class="text-logo"><h1>KIM HYO JIN</h1></a>
-				<nav class="nav">
-					<a class="text-animation1 nav__item" href="#">
-						<div class="text-animation1__background"></div>
-						<span class="text-animation1__text">ABOUT</span>
+				<div class="header__container">
+					<a href="#" class="text-logo" id="logo">
+						<h1>KIM HYO JIN</h1>
 					</a>
-					<a class="text-animation1 nav__item" href="#">
-						<div class="text-animation1__background"></div>
-						<span class="text-animation1__text">WORK</span>
-					</a>
-				</nav>
-			</div>
-		</header>
-		
-			<div class="intro-page__left-box" id="box">
-			</div>
-			<h1 id="intro-text" class="intro-page__text intro-text fadeIn"><!--
-				--><span class="intro-text__left">FRONT-END</span><!--
-				--><span class="intro-text__right">DEVELOPER</span><!--
-				--><span class="intro-text__below">WEB PUBLISHER</span><!--
-				--><div class="intro-text__line"></div>
-				</h1>
-			<div class="intro-page__right-box">
-
-			</div>
-
-			
+					<nav class="nav">
+						<a id="nav_about" class="text-animation1 nav__item" href="#">
+							<div class="text-animation1__background"></div>
+							<span class="text-animation1__text">ABOUT</span>
+						</a>
+						<a id="nav_work" class="text-animation1 nav__item" href="#">
+							<div class="text-animation1__background"></div>
+							<span class="text-animation1__text">WORK</span>
+						</a>
+					</nav>
+				</div>
+			</header>
+	<div id="intro-page" class="intro-page clearfix">
+		<div class="intro-page__left-box" id="box">
 		</div>
-		<div class="box"></div>
-	<script type="text/javascript" src="dist/bundle.js"></script></body>
+		<h1 id="intro-text" class="intro-page__text intro-text fadeIn"><!--
+		--><span class="intro-text__left">FRONT-END</span><!--
+		--><span class="intro-text__right">DEVELOPER</span><!--
+		--><span class="intro-text__below">WEB PUBLISHER</span><!--
+		--><div class="intro-text__line"></div>
+		</h1>
+		<div class="intro-page__right-box">
+		</div>
+	</div>
+
+	<div id="about-page">
+		<div style="height:5px; background-color:#343434;"></div>
+		about 페이지
+	</div>
+	
+	<div id="work-page">
+		<div style="height:5px; background-color:#343434;"></div>
+		work 페이지
+	</div>
+
+	<script type="text/javascript" src="dist/bundle.js"></script>
+</body>
+
 </html>
