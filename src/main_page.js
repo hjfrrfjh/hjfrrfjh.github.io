@@ -44,8 +44,10 @@ export default function () {
     }
 
     let bottomWall = Bodies.rectangle(canvas.offsetWidth * 0.5, canvas.offsetHeight + 250, canvas.offsetWidth, 500, walloption);
-    let leftWall = Bodies.rectangle(-250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
-    let rightWall = Bodies.rectangle(canvas.offsetWidth + 250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
+    let leftWall = Bodies.rectangle(-250, canvas.offsetHeight * 0.5, 500, 5000, walloption);
+    let rightWall = Bodies.rectangle(canvas.offsetWidth + 250, canvas.offsetHeight * 0.5, 500, 5000, walloption);
+    // let leftWall = Bodies.rectangle(-250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
+    // let rightWall = Bodies.rectangle(canvas.offsetWidth + 250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
 
     boxes.push(rightWall);
     boxes.push(leftWall);
@@ -72,10 +74,19 @@ export default function () {
     });
 
    
+    function pickColor(){
+        let colors=[
+            "#d64541",
+            // "#8e44ad",
+            "#4183d7",
+            "#36d7b7",
+            "#fef160",
+        ]
+        let randomColor = Math.floor(Math.random()*colors.length);
+        return  colors[randomColor];
+    }
 
-    // boxes.push(pointBox);
-
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
         boxes.push(generateBody());
     }
 
@@ -90,7 +101,7 @@ export default function () {
 
     function generateBody() {
         let a = Math.floor(Math.random() * (canvas.offsetWidth-50));
-        let b = Math.floor(Math.random() * -500);
+        let b = Math.floor(Math.random() * -500)-100;
         let c = Math.floor(Math.random() * 50 + 50);
         let d = Math.floor(Math.random() * 50 + 50);
         // let c = 80;
@@ -100,8 +111,8 @@ export default function () {
                 // sprite: {
                 //     texture: '../img/box.png'
                 // }
-                fillStyle:getComputedStyle(titleElement)['color']
-                // fillStyle:'rgb(110,219,155)'
+                // fillStyle:getComputedStyle(titleElement)['color']
+                fillStyle:pickColor()
             }
         });
         return box;
@@ -109,7 +120,17 @@ export default function () {
 
     document.getElementById("intro-page").addEventListener("click", function () {
         boxes.forEach(box=>{
-            Body.applyForce(box, {x: box.position.x, y: box.position.y}, {x: 0, y: -(Math.floor(Math.random()*4)*0.1)});
+            if(box==titleBox){
+                return;
+            }
+            box.render.fillStyle = pickColor();
+            Body.applyForce(box, {x: box.position.x, y: box.position.y}, {x: 0, y: -(Math.floor(Math.random()*2)*0.1+0.1)});
+            
+            if(box.position.y<(-3000)){
+                document.body.backgroundColor="red";
+                console.log('hi');
+
+            }
         });
     })
 

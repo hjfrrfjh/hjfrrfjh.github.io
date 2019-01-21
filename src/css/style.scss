@@ -1,12 +1,16 @@
 
+// $primary-color-dark:#343434;
+// $primary-color-light:rgb(249,249,249);
+
 $primary-color-dark:#343434;
-$primary-color-light:rgb(249,249,249);
+$primary-color-light:rgb(245, 245, 249);
 
 // $primary-color-dark:#42A7F4;
 // $primary-color-light:purple;
 
 
 $header-height:40px;
+$header-mobile-height:60px;
 
 *{
     padding:0;
@@ -35,7 +39,9 @@ html{
 }
 
 body{
-    font-family: "Montserrat";
+    font-family: "Montserrat", "GoyangDeogyang";
+    // font-family: "GoyangDeogyang";
+    
     font-weight: 500;
     color:$primary-color-dark;
     background-color:$primary-color-light;
@@ -58,7 +64,7 @@ body{
 }
 
 .header{
-    // height:$header-height;
+    height:$header-height;
     position:fixed;
     z-index:100;
     width:100%;
@@ -107,6 +113,19 @@ body{
     }
 }
 
+.sub-title{
+    &__line{
+        height:5px;
+        width:75%;
+        background-color:$primary-color-dark;
+    }
+
+    &__text{
+        letter-spacing:1rem;
+        font-size:4rem;
+    }
+}
+
 .intro-page{
     height:100vh;
 
@@ -131,6 +150,10 @@ body{
         top:40%;
         left:50%;
         transform:translate(-50%,-50%);
+    }
+    
+    canvas{
+        display:block;
     }
 }
 
@@ -178,14 +201,50 @@ body{
 }
 
 
-#work-page{
+#portfolio-page{
     height:100vh;
     padding-top:$header-height;
 }
+
 @media all and (max-width:860px){
     .intro-text{
-        font-size:2.3rem;
+        font-size:2rem;
+    }
+
+    .header{
+        height:$header-mobile-height;
+    }
+
+    .header__container{
+        position: absolute;
+        top:50%;
+        transform:translate(0,-50%);
+    }
+
+    .text-logo{
+        transform:translate(0,0);
+        h1{
+            letter-spacing: -0.1rem;
+            font-size:1.3rem;
+            font-weight: 500;
+        }
+    }
+
+    .nav__item{
+        font-size:0.9rem;
+    }
+
+    .sub-title__text{
+        font-size:2rem;
+        letter-spacing: 0.5rem;
+        text-shadow:1px 1px 0px rgba(0,0,0,0.5);
+    }
+    #about-page{
+        padding-top:$header-mobile-height;
+    }
+    
+    #portfolio-page{
+        padding-top:$header-mobile-height;
     }
 
 }
-

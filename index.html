@@ -13,23 +13,23 @@
 
 <body>
 		<header class="header">
-				<div class="header__container">
-					<a href="#" class="text-logo" id="logo">
-						<h1>KIM HYO JIN</h1>
+			<div class="header__container">
+				<a href="#" class="text-logo" id="logo">
+					<h1>KIM HYO JIN</h1>
+				</a>
+				<nav class="nav">
+					<a id="nav_about" class="text-animation1 nav__item" href="#">
+						<div class="text-animation1__background"></div>
+						<span class="text-animation1__text">ABOUT</span>
 					</a>
-					<nav class="nav">
-						<a id="nav_about" class="text-animation1 nav__item" href="#">
-							<div class="text-animation1__background"></div>
-							<span class="text-animation1__text">ABOUT</span>
-						</a>
-						<a id="nav_work" class="text-animation1 nav__item" href="#">
-							<div class="text-animation1__background"></div>
-							<span class="text-animation1__text">WORK</span>
-						</a>
-					</nav>
-				</div>
-			</header>
-	<div id="intro-page" class="intro-page clearfix">
+					<a id="nav_portfolio" class="text-animation1 nav__item" href="#">
+						<div class="text-animation1__background"></div>
+						<span class="text-animation1__text">PORTFOLIO</span>
+					</a>
+				</nav>
+			</div>
+		</header>
+	<section id="intro-page" class="intro-page clearfix">
 		<div class="intro-page__left-box" id="box">
 		</div>
 		<h1 id="intro-text" class="intro-page__text intro-text fadeIn"><!--
@@ -40,17 +40,31 @@
 		</h1>
 		<div class="intro-page__right-box">
 		</div>
-	</div>
+	</section>
 
-	<div id="about-page">
-		<div style="height:5px; background-color:#343434;"></div>
-		about 페이지
-	</div>
+	<section class="about" id="about-page" style="overflow:auto;">
+		<div class="about__title sub-title">
+			<div class="sub-title__line"></div>
+			<span class="sub-title__text">ABOUT</span>
+			<br>
+			<div style="font-size:2rem;">
+					고양 덕양체 테스트 입니다. <br>
+					고양 덕양체 테스트 입니다. <br>
+					고양 덕양체 테스트 입니다. <br>
+					고양 덕양체 테스트 입니다. <br>
+			</div>
+
+		</div>
+
+		<!-- <div style="height:1800px; background-color:lightcoral;"></div> -->
+	</section>
 	
-	<div id="work-page">
-		<div style="height:5px; background-color:#343434;"></div>
-		work 페이지
-	</div>
+	<section class="portfolio" id="portfolio-page">
+		<div class="portfolio__title">
+			<div class="sub-title__line"></div>
+			<span class="sub-title__text">PORTFOLIO</span>
+		</div>
+	</section>
 
 	<script type="text/javascript" src="dist/bundle.js"></script>
 </body>
