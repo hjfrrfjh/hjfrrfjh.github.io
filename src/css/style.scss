@@ -71,9 +71,6 @@ body{
     width:100%;
     background-color:$primary-color-light;
 
-    &__container{
-
-    }
 }
 .nav{
     display:inline-block;
@@ -187,6 +184,7 @@ body{
 .sub{
     height:100vh;
     padding-top:$header-height;
+    position:relative;
 
     &__left-line{
         height:100%;
@@ -195,12 +193,27 @@ body{
         background-color:$primary-color-dark;
     }
     
+    &__content-wraper{
+        display:table;
+        // padding-bottom:80px;
+        box-sizing:border-box;
+        height:calc(100% - 80px);
+        
+    }
+
     &__content{
+        // position:absolute;
         margin-left:70px;
         padding-left:20px;
         padding-right:80px;
+        margin-top:20px;
+        // top:50%;
+        // transform:translate(0,-50%);
         box-sizing:border-box;
+        display:table-cell;
+        vertical-align:middle;
     }
+
 
     &__title-line{
         height:2px;
