@@ -3,7 +3,8 @@
 // $primary-color-light:rgb(249,249,249);
 
 $primary-color-dark:#343434;
-$primary-color-light:rgb(245, 245, 249);
+$primary-color-light:rgb(249, 249, 249);
+$line:rgb(190, 190, 190);
 
 // $primary-color-dark:#42A7F4;
 // $primary-color-light:purple;
@@ -39,7 +40,7 @@ html{
 }
 
 body{
-    font-family: "Montserrat", "GoyangDeogyang";
+    font-family: "Montserrat", "S-CoreDream-4Regular";
     // font-family: "GoyangDeogyang";
     
     font-weight: 500;
@@ -113,18 +114,6 @@ body{
     }
 }
 
-.sub-title{
-    &__line{
-        height:5px;
-        width:75%;
-        background-color:$primary-color-dark;
-    }
-
-    &__text{
-        letter-spacing:1rem;
-        font-size:4rem;
-    }
-}
 
 .intro-page{
     height:100vh;
@@ -140,7 +129,7 @@ body{
         height:100%;
         width:50%;
         float:right;
-        // background-image:url('../../img/main-page.jpg');
+        background-image:url('../../img/main-page.jpg');
         background-size:cover;
         background-position:center center;
     }
@@ -195,15 +184,157 @@ body{
 }
 
 
-#about-page{
+.sub{
     height:100vh;
     padding-top:$header-height;
+
+    &__left-line{
+        height:100%;
+        width:70px;
+        float:left;
+        background-color:$primary-color-dark;
+    }
+    
+    &__content{
+        margin-left:70px;
+        padding-left:20px;
+        padding-right:80px;
+        box-sizing:border-box;
+    }
+
+    &__title-line{
+        height:2px;
+        width:75%;
+        background-color:$primary-color-dark;
+    }
+
+    &__title-text{
+        letter-spacing:1rem;
+        font-size:4rem;
+        margin-left:-0.9em;
+        display:inline-block;
+        font-weight: 500;
+    }
+
+    &__first-char{
+        color:$primary-color-light;
+    }
 }
 
+.sub:after{
+        content:'';
+        clear:both;
+        display:block;
+}
+.about{
+    &__row1{
+        width:100%;
+        overflow:hidden;
+    }
 
-#portfolio-page{
-    height:100vh;
-    padding-top:$header-height;
+    &__photo{
+        width:300px;
+        float:left;
+    }
+
+
+    &__right{
+        margin-left:300px;
+        padding-left:50px;
+    }
+
+    &__top-text{
+        font-weight: normal;
+        padding-bottom:3px;
+        border-bottom:2px solid $line;
+        margin-top:50px;
+        font-size:0.9rem;
+        display:inline-block;
+    }
+
+    &__name{
+        font-size:1.5rem;
+        font-weight: bold;
+        letter-spacing:0.5rem;
+        margin-top:20px;
+    }
+
+    &__underline{
+        width:40px;
+        height:2px;
+        margin-top:50px;
+        background-color:$line;
+    }
+
+    &__contact-container{
+        // width:100%;
+        margin-top:150px;
+    }
+
+    &__url{
+        float:left;
+        width:60%;
+        padding:30px 30px;
+        border-right:1px solid $line;
+    }
+
+    &__sns{
+        float:left;
+        padding:30px 30px;
+        width:30%;
+    }
+
+    &__row2{
+        margin-top:30px;
+    }
+
+    &__detail{
+        max-width:1000px;
+    }
+}
+
+.dots{
+    position: fixed;
+    right:50px;
+    top:50%;
+    
+    &__dot{
+        box-shadow:1px 0px 2px black;
+        height:20px;
+        width:20px;
+        margin-top:0.5em;
+        background-color:$primary-color-dark;
+        border-radius: 50%;
+        cursor:pointer;
+
+        &--nomargin{
+            margin-top:0;
+        }
+    }
+
+    &__string{
+        position:absolute;
+        height:80%;
+        background-color:$primary-color-dark;
+        width:0.8em;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+        z-index:-1;
+    }
+
+    &__pointer{
+        box-shadow:1px 1px 1px black;
+        position:absolute;
+        height:12px;
+        width:12px;
+        background-color:white;
+        border-radius:50%;
+        margin-top:4px;
+        margin-left:4px;
+        top:0;
+        left:0;
+    }
 }
 
 @media all and (max-width:860px){
@@ -234,11 +365,20 @@ body{
         font-size:0.9rem;
     }
 
+
     .sub-title__text{
         font-size:2rem;
         letter-spacing: 0.5rem;
         text-shadow:1px 1px 0px rgba(0,0,0,0.5);
     }
+
+    .sub-left-line{
+        height:100%;
+        width:30px;
+        float:left;
+        background-color:$primary-color-dark;
+    }
+
     #about-page{
         padding-top:$header-mobile-height;
     }

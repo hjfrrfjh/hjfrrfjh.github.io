@@ -2,8 +2,8 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    mode:"development",
-    devtool: 'eval-source-map',
+    mode:"production",
+    // devtool: 'eval-source-map',
     output:{
         filename:"bundle.js"
     },
@@ -53,7 +53,7 @@ module.exports = {
     plugins: [
         new WebpackCleanupPlugin(),
         new HtmlWebpackPlugin({
-            template:'index.html'
+            template:'src/index.html'
         })
     ],
     devServer:{
