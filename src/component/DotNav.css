@@ -1,0 +1,38 @@
+.dot-nav__dot{
+    height:20px;
+    width:20px;
+    margin-top:0.5em;
+    background-color:black;
+    border-radius: 50%;
+    cursor:pointer;
+}
+
+.dot-nav__dot--nomargin{
+    margin-top:0;
+}
+
+.dot-nav__string{
+    position:absolute;
+    height:80%;
+    background-color:black;
+    width:0.5em;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:-1;
+}
+
+.dot-nav__pointer{
+    position:absolute;
+    height:12px;
+    width:12px;
+    background-color:white;
+    border-radius:50%;
+    margin-top:4px;
+    margin-left:4px;
+    top:0;
+    left:0;
+}
+
+
+

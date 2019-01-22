@@ -184,10 +184,15 @@ body{
 .sub{
     height:100vh;
     padding-top:$header-height;
-    position:relative;
+    // position:relative;
+    // scroll
+
 
     &__left-line{
-        height:100%;
+        height:calc(100% + #{$header-height});
+        // margin-bottom:
+        margin-top:-$header-height;
+
         width:70px;
         float:left;
         background-color:$primary-color-dark;
@@ -195,16 +200,15 @@ body{
     
     &__content-wraper{
         display:table;
-        // padding-bottom:80px;
+        padding-bottom:80px;
         box-sizing:border-box;
         height:calc(100% - 80px);
-        
     }
 
     &__content{
         // position:absolute;
         margin-left:70px;
-        padding-left:20px;
+        padding-left:100px;
         padding-right:80px;
         margin-top:20px;
         // top:50%;
@@ -248,6 +252,7 @@ body{
     &__photo{
         width:300px;
         float:left;
+        border-radius:10px;
     }
 
 
@@ -306,47 +311,22 @@ body{
     }
 }
 
-.dots{
+.dot-nav{
     position: fixed;
-    right:50px;
+    right:calc(10% - 20px);
+    // right:0;
     top:50%;
-    
+    transform:translate(0,-50%);
     &__dot{
-        box-shadow:1px 0px 2px black;
-        height:20px;
-        width:20px;
-        margin-top:0.5em;
         background-color:$primary-color-dark;
-        border-radius: 50%;
-        cursor:pointer;
-
-        &--nomargin{
-            margin-top:0;
-        }
     }
 
     &__string{
-        position:absolute;
-        height:80%;
         background-color:$primary-color-dark;
-        width:0.8em;
-        left:50%;
-        top:50%;
-        transform:translate(-50%,-50%);
-        z-index:-1;
     }
 
     &__pointer{
-        box-shadow:1px 1px 1px black;
-        position:absolute;
-        height:12px;
-        width:12px;
         background-color:white;
-        border-radius:50%;
-        margin-top:4px;
-        margin-left:4px;
-        top:0;
-        left:0;
     }
 }
 
@@ -390,14 +370,6 @@ body{
         width:30px;
         float:left;
         background-color:$primary-color-dark;
-    }
-
-    #about-page{
-        padding-top:$header-mobile-height;
-    }
-    
-    #portfolio-page{
-        padding-top:$header-mobile-height;
     }
 
 }

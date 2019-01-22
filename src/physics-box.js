@@ -4,9 +4,7 @@ export default function () {
     let boxes = [];
     let titleElement = document.getElementById("intro-text");
     let canvas = document.getElementById("box");
-    let page = document.getElementById("intro-age");
 
-    let prevHeight = window.innerHeight;
     let prevWidth = window.innerWidth;
     let prevTitleSize = { width: titleElement.offsetWidth, height: titleElement.offsetHeight };
 
@@ -64,16 +62,6 @@ export default function () {
 
     boxes.push(titleBox);
 
-    
-
-    let pointBox = Bodies.rectangle(100, -100, 50, 50, {
-        isStatic: true,
-        render: {
-            fillStyle: 'black'
-        }
-    });
-
-   
     function pickColor(){
         let colors=[
             "#d64541",
@@ -134,11 +122,6 @@ export default function () {
         });
     })
 
-    setTimeout(() => {
-        Body.set(pointBox, "isStatic", false);
-    }, 7000)
-
-
     let resizeTimeOut = null;
     let resizeDelay = 50;
 
@@ -154,7 +137,6 @@ export default function () {
     });
 
     function resizeCanvas() {
-        
         // 캔버스위치 다시설정
         render.canvas.width = canvas.offsetWidth;
         render.canvas.height = canvas.offsetHeight;
