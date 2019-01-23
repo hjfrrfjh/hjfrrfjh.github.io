@@ -1,7 +1,7 @@
 import fonts from './css/web_font.scss';
+// import "@babel/polyfill"; //Object.assing 등의 메소드 사용 가능하게 해준다
 
-
-// import physicsBox from './physics-box';
+import physicsBox from './physics-box';
 
 import {ScrollPage}  from './component/scrollPage.js';
 
@@ -13,7 +13,7 @@ import styles from './css/style.scss';
 
 
 window.onload = function () {
-    document.querySelector('html').style.opacity = "1";
+
 
     let scrollPage = new ScrollPage(undefined,index=>{
         dotNav.select(index);
@@ -30,13 +30,12 @@ window.onload = function () {
     ].forEach((elm,index)=>{
         elm.addEventListener("click",(e)=>{
             e.preventDefault();
-            scrollPage.scrollPage(index);
+            scrollPage.scrollPage(index,{moveTop:true});
             dotNav.select(index);
         });
     });
     
-    // physicsBox();
+    physicsBox();
 
-    
-
+    document.querySelector('html').style.opacity = "1";
 }

@@ -1,9 +1,10 @@
 
 import smoothscroll from 'smoothscroll-polyfill';
 // import TinyGesture from 'tinygesture';
+import TinyGesture from './TinyGesture.js';
 import {InputController} from './inputController.js';
 
-import hammer from 'hammerjs';
+// import hammer from 'hammerjs';
 
 
 smoothscroll.polyfill();
@@ -17,72 +18,45 @@ export class ScrollPage {
         this.timeout = null;
         this.func = func;
 
-        let inputController = new InputController();
+        const gesture = new TinyGesture(document.body);
 
-        inputController.addListener(InputController.PAN_DOWN_END,()=>{
+        //터치 or 클릭시 화면 움직이는 효과
+        gesture.on('panmove',(event)=>{
+            let offset = gesture.velocityY*-1;
             let anchor = this.getCurrentAnchor();
-            if(!this.isTop(anchor)) return;
-            this._scrollPrev();
-        });                
-            
-        inputController.addListener(InputController.PAN_UP_END,()=>{
+
+            if(offset>0){
+                if(!this.isBottom(anchor)){
+                    if(event.type==="mousemove"){
+                        anchor.scrollBy(0,offset);
+                    }
+                    return;
+                }
+            }else if(offset<0){
+                if(!this.isTop(anchor)){
+                    if(event.type==="mousemove"){
+                        anchor.scrollBy(0,offset);
+                    }
+                    return;
+                }
+            }
+
+            window.scrollBy(0,offset);
+        });
+
+        //터치 or 드래그 드롭시 페이지 이동
+        gesture.on('panend', () => {
             let anchor = this.getCurrentAnchor();
-            if(!this.isBottom(anchor)) return;
-            this._scrollNext();
-            
+            if(gesture.touchMoveY>100){
+                if(!this.isTop(anchor)) return;
+                this._scrollPrev();
+            }else if(gesture.touchMoveY<-100){
+                if(!this.isBottom(anchor)) return;
+                this._scrollNext();
+            }else{
+                this.scrollPage();
+            }
         });
-
-        inputController.addListener(InputController.PAN_DOWN,(info)=>{
-            // window.scrollBy(0,info.offset*0.5);
-        });
-        
-        inputController.addListener(InputController.PAN_UP,(info)=>{
-            // window.scrollBy(0,info.offset*0.5);
-        });
-
-
-// movementY
-        // inputController.addListener("mousemove",()=>{
-        //     console.log("ok");
-        // });
-        // var hammertime = new Hammer(document.body);
-
-        // hammertime.on('panend', function(ev) {
-            // console.log(ev);
-        // });
-
-        // const gesture = new TinyGesture(document.body);
-
-        // //터치 or 클릭시 화면 움직이는 효과
-        // gesture.on('panmove',()=>{
-        //     let offset = gesture.velocityY*-1;
-        //     let anchor = this.getCurrentAnchor();
-
-        //     if(offset>0){
-        //         if(!this.isBottom(anchor)){
-        //             return;
-        //         }
-        //     }else if(offset<0){
-        //         if(!this.isTop(anchor)){
-        //             return;
-        //         }
-        //     }
-
-        //     window.scrollBy(0,offset);
-        // });
-
-        // //터치 or 드래그 드롭시 페이지 이동
-        // gesture.on('panend', () => {
-        //     let anchor = this.getCurrentAnchor();
-
-        //     if(gesture.touchMoveY>0){
-        //         if(!this.isTop(anchor)) return;
-        //         this._scrollPrev();
-        //     }else if(gesture.touchMoveY<0){
-        //         if(!this.isBottom(anchor)) return;
-        //         this._scrollNext();
-        //     }
-        // });
 
         // 사이즈 조절될때 자동으로 스크롤
         window.addEventListener("resize", () => {
@@ -110,12 +84,12 @@ export class ScrollPage {
 
     // 스크롤이 맨위에있는지
     isTop(elm) {
-        return elm.scrollTop == 0
+        return Math.abs(elm.scrollTop)<2;
     }
 
     // 스크롤이 맨아래에 있는지
     isBottom(elm) {
-        return elm.scrollHeight == elm.scrollTop + elm.offsetHeight
+        return Math.abs(elm.scrollHeight - (elm.scrollTop + elm.offsetHeight))<2;
     }
 
     // 스크롤위치를 통해 현재페이지 확인
@@ -124,9 +98,12 @@ export class ScrollPage {
     }
 
     //특정페이지, 또는 현재 페이지로 이동
-    scrollPage(num = this.current) {
+    scrollPage(num = this.current,options={moveTop:false}) {
         this.current = num;
 
+        if(options.moveTop){
+            this.getCurrentAnchor().scrollTo(0,0);
+        }
         // 페이지 스크롤
         window.scroll({
             behavior: "smooth",

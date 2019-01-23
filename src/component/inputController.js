@@ -1,3 +1,4 @@
+// 만들기 중단 사용하지 않음 TingyGesture.js 사용으로 변경
 // import { listeners } from "cluster";
 
 export class InputController{
