@@ -120,6 +120,10 @@ body{
         width:50%;
         float:left;
         background-color:$primary-color-dark;
+        // canvas {
+        //     width:100%;
+        //     height:100vh;
+        // }
     }
 
     &__right-box{
@@ -184,12 +188,14 @@ body{
 .sub{
     height:100vh;
     padding-top:$header-height;
+    overflow:auto;
     // position:relative;
     // scroll
 
 
     &__left-line{
         height:calc(100% + #{$header-height});
+        // padding-top:$height;
         // margin-bottom:
         margin-top:-$header-height;
 
@@ -203,6 +209,7 @@ body{
         padding-bottom:80px;
         box-sizing:border-box;
         height:calc(100% - 80px);
+        // overflow:auto;
     }
 
     &__content{
@@ -216,6 +223,8 @@ body{
         box-sizing:border-box;
         display:table-cell;
         vertical-align:middle;
+        // overflow:auto;
+        
     }
 
 

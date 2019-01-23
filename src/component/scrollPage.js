@@ -1,52 +1,94 @@
+
 import smoothscroll from 'smoothscroll-polyfill';
+import TinyGesture from 'tinygesture';
+
+// import hammer from 'hammerjs';
 
 smoothscroll.polyfill();
 
-export class ScrollPage{
-    constructor(pages=document.getElementsByClassName("scroll-page"),func=()=>{}){
-        this.current = this.getScrollTop() / window.innerHeight;
+
+export class ScrollPage {
+    constructor(pages = document.getElementsByClassName("scroll-page"), func = () => { }) {
+        this.current = this.getCurrentByScroll();
         this.anchors = pages;
-        this.moving=false;
-        this.timeout=null;
-        this.func=func;
-        for(let i=0;i<this.anchors.length;i++){
-            this.anchors[i].addEventListener("click", (e) => {
-                e.preventDefault();
-                this.scrollPage(i);
-            });
-        }
+        this.moving = false;
+        this.timeout = null;
+        this.func = func;
 
-        // 사이즈 조절될때 자동으로 스크롤
-        window.addEventListener("resize", function () {
-            window.scrollTo(0, this.getElementOffset(this.anchors[this.current]).top);
-        }.bind(this));
+        const gesture = new TinyGesture(document.body);
 
-        //마우스 휠 이벤트 연결
-        window.addEventListener('wheel', function (e) {
+        //터치 or 클릭시 화면 움직이는 효과
+        gesture.on('panmove',()=>{
+            let offset = gesture.velocityY*-1;
             let anchor = this.getCurrentAnchor();
 
+            if(offset>0){
+                if(!this.isBottom(anchor)){
+                    return;
+                }
+            }else if(offset<0){
+                if(!this.isTop(anchor)){
+                    return;
+                }
+            }
+
+            window.scrollBy(0,offset);
+        });
+
+        //터치 or 드래그 드롭시 페이지 이동
+        gesture.on('panend', () => {
+            let anchor = this.getCurrentAnchor();
+
+            if(gesture.touchMoveY>0){
+                if(!this.isTop(anchor)) return;
+                this._scrollPrev();
+            }else if(gesture.touchMoveY<0){
+                if(!this.isBottom(anchor)) return;
+                this._scrollNext();
+            }
+        });
+
+        // 사이즈 조절될때 자동으로 스크롤
+        window.addEventListener("resize", () => {
+            window.scrollTo(0, this.getElementOffset(this.anchors[this.current]).top);
+        });
+
+        //마우스 휠 이벤트 연결
+        window.addEventListener('wheel', e => {
+            let anchor = this.getCurrentAnchor();
             if (e.deltaY < 0) { //휠 업 
-                if (anchor.scrollHeight > window.innerHeight) {// 창의 크기보다 내용이 클때(스크롤바가 있으면)
-                    if (anchor.scrollTop != 0) { //스크롤이 맨위에 있을때 휠업 무시, 스크롤이 이동
-                        return;
-                    }
+                if (!this.isTop(anchor)) { //스크롤이 맨위에 있을때 휠업 무시, 스크롤이 이동
+                    return;
                 }
-                this.scrollPrev();
+                this._scrollPrev();
             }
-        
+
             if (e.deltaY > 0) { //휠 다운      
-                if (anchor.scrollHeight > window.innerHeight) {
-                    if (anchor.scrollHeight != anchor.scrollTop + anchor.offsetHeight) { //스크롤이 맨 아래에 있지 않으면
-                        return;
-                    }
+                if (!this.isBottom(anchor)) { //스크롤이 맨 아래에 있지 않으면
+                    return;
                 }
-                this.scrollNext();
+                this._scrollNext();
             }
-        }.bind(this));
+        });
+    }
+
+    // 스크롤이 맨위에있는지
+    isTop(elm) {
+        return elm.scrollTop == 0
+    }
+
+    // 스크롤이 맨아래에 있는지
+    isBottom(elm) {
+        return elm.scrollHeight == elm.scrollTop + elm.offsetHeight
+    }
+
+    // 스크롤위치를 통해 현재페이지 확인
+    getCurrentByScroll() {
+        return Math.round(this.getScrollTop() / window.innerHeight);
     }
 
     //특정페이지, 또는 현재 페이지로 이동
-    scrollPage(num=this.current){
+    scrollPage(num = this.current) {
         this.current = num;
 
         // 페이지 스크롤
@@ -62,20 +104,39 @@ export class ScrollPage{
         this.timeout = setTimeout(() => {
             this.moving = false;
         }, 500);
-        
-    }
-    
-    scrollNext(){
-        if (this.current != this.anchors.length - 1 && !this.moving) {
-            this.scrollPage(this.current+1);
-            this.func(this.current);
 
+        this.getCurrentAnchor().focus();
+    }
+
+    _scrollPage(num) {
+        this.scrollPage(num);
+        this.func(this.current);
+    }
+
+    scrollNext() {
+        if (this.current != this.anchors.length - 1 && !this.moving) {
+            this.scrollPage(this.current + 1);
+            return true;
+        }
+        return false;
+    }
+
+    _scrollNext() {
+        if (this.scrollNext()) {
+            this.func(this.current);
         }
     }
 
-    scrollPrev(){
+    scrollPrev() {
         if (this.current != 0 && !this.moving) {
-            this.scrollPage(this.current-1);
+            this.scrollPage(this.current - 1);
+            return true;
+        }
+        return false;
+    }
+
+    _scrollPrev() {
+        if (this.scrollPrev()) {
             this.func(this.current);
         }
     }

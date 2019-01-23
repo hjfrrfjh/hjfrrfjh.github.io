@@ -35,5 +35,7 @@ window.onload = function () {
     
     physicsBox();
 
+    
+
     document.querySelector('html').style.opacity = "1";
 }

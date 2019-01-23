@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack --mod production"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,9 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "hammerjs": "^2.0.8",
     "matter-js": "^0.14.2",
-    "smoothscroll-polyfill": "^0.4.3"
+    "smoothscroll-polyfill": "^0.4.3",
+    "tinygesture": "^1.1.4"
   }
 }

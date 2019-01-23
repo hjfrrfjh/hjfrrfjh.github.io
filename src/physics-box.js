@@ -113,12 +113,6 @@ export default function () {
             }
             box.render.fillStyle = pickColor();
             Body.applyForce(box, {x: box.position.x, y: box.position.y}, {x: 0, y: -(Math.floor(Math.random()*2)*0.1+0.1)});
-            
-            if(box.position.y<(-3000)){
-                document.body.backgroundColor="red";
-                console.log('hi');
-
-            }
         });
     })
 
@@ -138,6 +132,7 @@ export default function () {
 
     function resizeCanvas() {
         // 캔버스위치 다시설정
+
         render.canvas.width = canvas.offsetWidth;
         render.canvas.height = canvas.offsetHeight;
 
