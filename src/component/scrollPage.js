@@ -1,8 +1,10 @@
 
 import smoothscroll from 'smoothscroll-polyfill';
-import TinyGesture from 'tinygesture';
+// import TinyGesture from 'tinygesture';
+import {InputController} from './inputController.js';
 
-// import hammer from 'hammerjs';
+import hammer from 'hammerjs';
+
 
 smoothscroll.polyfill();
 
@@ -15,38 +17,72 @@ export class ScrollPage {
         this.timeout = null;
         this.func = func;
 
-        const gesture = new TinyGesture(document.body);
+        let inputController = new InputController();
 
-        //터치 or 클릭시 화면 움직이는 효과
-        gesture.on('panmove',()=>{
-            let offset = gesture.velocityY*-1;
+        inputController.addListener(InputController.PAN_DOWN_END,()=>{
             let anchor = this.getCurrentAnchor();
-
-            if(offset>0){
-                if(!this.isBottom(anchor)){
-                    return;
-                }
-            }else if(offset<0){
-                if(!this.isTop(anchor)){
-                    return;
-                }
-            }
-
-            window.scrollBy(0,offset);
+            if(!this.isTop(anchor)) return;
+            this._scrollPrev();
+        });                
+            
+        inputController.addListener(InputController.PAN_UP_END,()=>{
+            let anchor = this.getCurrentAnchor();
+            if(!this.isBottom(anchor)) return;
+            this._scrollNext();
+            
         });
 
-        //터치 or 드래그 드롭시 페이지 이동
-        gesture.on('panend', () => {
-            let anchor = this.getCurrentAnchor();
-
-            if(gesture.touchMoveY>0){
-                if(!this.isTop(anchor)) return;
-                this._scrollPrev();
-            }else if(gesture.touchMoveY<0){
-                if(!this.isBottom(anchor)) return;
-                this._scrollNext();
-            }
+        inputController.addListener(InputController.PAN_DOWN,(info)=>{
+            // window.scrollBy(0,info.offset*0.5);
         });
+        
+        inputController.addListener(InputController.PAN_UP,(info)=>{
+            // window.scrollBy(0,info.offset*0.5);
+        });
+
+
+// movementY
+        // inputController.addListener("mousemove",()=>{
+        //     console.log("ok");
+        // });
+        // var hammertime = new Hammer(document.body);
+
+        // hammertime.on('panend', function(ev) {
+            // console.log(ev);
+        // });
+
+        // const gesture = new TinyGesture(document.body);
+
+        // //터치 or 클릭시 화면 움직이는 효과
+        // gesture.on('panmove',()=>{
+        //     let offset = gesture.velocityY*-1;
+        //     let anchor = this.getCurrentAnchor();
+
+        //     if(offset>0){
+        //         if(!this.isBottom(anchor)){
+        //             return;
+        //         }
+        //     }else if(offset<0){
+        //         if(!this.isTop(anchor)){
+        //             return;
+        //         }
+        //     }
+
+        //     window.scrollBy(0,offset);
+        // });
+
+        // //터치 or 드래그 드롭시 페이지 이동
+        // gesture.on('panend', () => {
+        //     let anchor = this.getCurrentAnchor();
+
+        //     if(gesture.touchMoveY>0){
+        //         if(!this.isTop(anchor)) return;
+        //         this._scrollPrev();
+        //     }else if(gesture.touchMoveY<0){
+        //         if(!this.isBottom(anchor)) return;
+        //         this._scrollNext();
+        //     }
+        // });
 
         // 사이즈 조절될때 자동으로 스크롤
         window.addEventListener("resize", () => {
