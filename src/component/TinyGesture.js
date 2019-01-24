@@ -87,7 +87,6 @@ export default class TinyGesture {
   }
 
   onTouchStart (event) {
-    event.preventDefault();
     this.thresholdX = this.opts.threshold('x', this);
     this.thresholdY = this.opts.threshold('y', this);
     this.disregardVelocityThresholdX = this.opts.disregardVelocityThreshold('x', this);
@@ -199,6 +198,6 @@ TinyGesture.defaults = {
 // Passive feature detection.
 let passiveIfSupported = false;
 
-// try {
-//   window.addEventListener('test', null, Object.defineProperty({}, 'passive', { get: function() { passiveIfSupported = { passive: true }; } }));
-// } catch(err) {}
+try {
+  window.addEventListener('test', null, Object.defineProperty({}, 'passive', { get: function() { passiveIfSupported = { passive: true }; } }));
+} catch(err) {}

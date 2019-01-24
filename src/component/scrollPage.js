@@ -19,6 +19,7 @@ export class ScrollPage {
 
         //터치 or 클릭시 화면 움직이는 효과
         gesture.on('panmove',(event)=>{
+            if(this.moving) return;
             let offset = gesture.velocityY*-1;
             let anchor = this.getCurrentAnchor();
 

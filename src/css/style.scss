@@ -1,16 +1,18 @@
 
-$primary-color-dark:#343434;
+$primary-color-dark:#252525;
 // $primary-color-light:lightgrey;
 // $primary-color-dark:#2e3131;
 $primary-color-light:#FAFAFA;
 $point-color:#416686;
 $point-color-light:#88b3a3;
 
-$line:rgb(220, 220, 220);
+$font-color-light:white;
+
+$line:#7c7c7c;
 
 $header-height:40px;
 $header-mobile-height:60px;
-$sub-padding-left:50px;
+$sub-padding-left:4vw;
 
 *{
     padding:0;
@@ -23,6 +25,9 @@ ul, li {
     list-style:none;
 }
 
+i{
+    font-style:normal;
+}
 a{
     text-decoration:none;
     color:inherit;
@@ -40,8 +45,9 @@ html{
 
 body{
     font-family: "Montserrat", "S-CoreDream-4Regular";
-    font-weight: 500;
-    color:$primary-color-dark;
+    // font-weight: 500;
+    // color:$primary-color-dark;
+    color:black;
     background-color:$primary-color-light;
     // background-image:url('../../img/bg.png');
     // background-image:url('../../img/bg3.png');
@@ -74,6 +80,7 @@ body{
     position:relative;
     display:inline-block;
     vertical-align: middle;
+    font-weight: 500;
 
     &__item{
         margin-left:20px;
@@ -137,26 +144,20 @@ body{
 .intro-text{
     color:$primary-color-light;
     letter-spacing: -0.1rem;
-    font-size:3rem;;
+    font-size:4.5vw;
     text-shadow:1px 1px 0px rgba(0,0,0,0.5);
-    margin-left:-0.2em;
-    
-    &__left{
-        font-weight: 500;
-        white-space:nowrap;
-    }
+    margin-left:-0.22em;
+    font-weight: normal;
+    white-space:nowrap;
 
     &__right{
         color:$primary-color-dark;
-        white-space:nowrap;
-        font-weight: 500;
         margin-left:0.3em;
         padding-bottom:1%;
         border-bottom:2px solid $primary-color-dark;
     }
 
     &__below{
-        font-weight: 500;
         margin-top:-1vh;
         display:block;
         font-size:0.55em;
@@ -183,10 +184,11 @@ body{
 
     &__title{
         letter-spacing:1rem;
-        font-size:3rem;
+        font-size:4vw;
+        
         // border-top:2px solid $primary-color-dark;
         font-weight: 500;
-        margin-left:5px;
+        margin-left:0.5vw;
         width:80%;
         &-first-char{
             color:$primary-color-light;
@@ -195,37 +197,31 @@ body{
     }
 
     &__content-wraper{
-        display:table;
-        height:calc(100% - 200px);
+        padding-left:$sub-padding-left;
+        width:calc(92vw - 20px);
+        // padding-left:calc(20vw + #{$sub-padding-left} - 150px);
     }
 
     &__content{
-        display:table-cell;
-        vertical-align:middle;
-        padding-left:calc(20vw + #{$sub-padding-left} - 150px);
-        padding-right:80px;
+        // padding:50px;
+        padding:3vw;
+        // padding-right:80px;
         box-sizing:border-box;
     }
 }
 
 .about{
-    &__row1{
-        width:100%;
-        margin-top:50px;
-        overflow:hidden;
-    }
-
     &__photo{
-        
         width:300px;
         float:left;
-        border-radius:10px;
+        border-radius:5px;
     }
 
-
     &__right{
-        margin-left:300px;
+        width: calc(100% - 300px);
+        float:left;
         padding-left:50px;
+        box-sizing:border-box;
     }
 
     &__top-text{
@@ -233,78 +229,86 @@ body{
         padding-bottom:3px;
         border-bottom:2px solid $line;
         margin-top:50px;
-        font-size:0.9rem;
         display:inline-block;
     }
 
     &__name{
-        font-size:1.5rem;
+        font-size:2rem;
         font-weight: bold;
         letter-spacing:0.5rem;
         margin-top:20px;
-        // color:$point-color;
     }
 
     &__underline{
         width:40px;
         height:2px;
-        margin-top:50px;
+        margin-top:80px;
         background-color:$line;
     }
 
     &__contact-container{
-        // width:100%;
         margin-top:150px;
+        width:100%;
     }
 
     &__url{
         float:left;
-        width:60%;
-        padding:30px 30px;
-        border-right:1px solid $line;
+        width:50%;
+        padding:20px 0;
+        box-sizing:border-box;
+        text-align:center;
+        border-right:2px solid $line;
     }
-
+    
     &__sns{
         float:left;
-        padding:30px 30px;
-        width:30%;
+        width:50%;
+        padding:20px 0;
+        box-sizing:border-box;
+        text-align:center;
+        a i{
+            font-size:1.5rem;
+            margin-left:20px;
+        }
+        a:first-child i{
+            margin-left:0;
+        }
     }
 
     &__row2{
         margin-top:30px;
+        clear:both; 
     }
 
     &__detail{
+        text-indent:1rem;
         margin-top:70px;
-        max-width:1200px;
+        max-width:1120px;
     }
 }
 
 .portfolio{
     // max-width:1200px;
-    padding-top:30px;
-    padding-bottom:30px;
+    // padding-top:30px;
+    // padding-bottom:30px;
 
 }
 
 .card{
-    width:300px;
-    height:350px;
-    margin-right:20px;
-    margin-top:20px;
-    display:inline-block;
     position:relative;
+    width:300px;
+    height:380px;
+    margin:10px;
+    display:inline-block;
     overflow:hidden;
-    border:1px solid $line;
     box-sizing:border-box;
-    // box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
+    
     &__container{
         width:100%;
         height:100%;
-        
     }
-
 
     &__picture{
         width:100%;
@@ -318,9 +322,9 @@ body{
     &__body{
         position:absolute;
         background-color:white;
-        padding:20px;
+        padding:15px;
         bottom:0;
-        height:40%;
+        height:45%;
         width:100%;
     }
 
@@ -328,58 +332,95 @@ body{
         font-size:1.2rem;
         font-weight: bold;
         float:left;
+        box-sizing:border-box;
         // color:$point-color;
+        &:hover{
+            color:$primary-color-light;
+            background-color:$primary-color-dark;
+        }
     }
 
     &__info-button{
         float:right;
         font-size:1.5rem;
+        &:hover{
+            transform:scale(1.1);
+        }
     }
 
     &__text{
         clear:both;
-        font-size:0.9rem;
         margin-top:40px;
+    }
+    &__buttons{
+        margin-top:20px;
+        text-align:center;
+        // .button:first-child{
+        //     margin-right:20px;
+        // }
     }
     
     &__info{
-        top:0;
+        top:100%;
         left:0;
         position:absolute;
         height:100%;
         width:100%;
         padding:20px;
-        background-color:white;
-        font-size:0.9rem;
-        transform:translate(0,100%);
-        transition:all 0.3s ease-in; //내려가는 속도 
+        transition:top 0.3s ease-in; //내려가는 속도 
+        background-image:url('../../img/bg.png');
+        display:table;
+    }
+
+    &__info-container{
+        display:table-cell;
+        vertical-align: middle;
     }
 
     &__info--showing{
+        top:0%;
         transition:all 0.3s ease-out; //올라오는 속도
-        transform:translate(0,0);
     }
 
     &__info-close{
-        text-align:right;
+        position: absolute;
+        right:20px;
+        top:20px;
         display:block;
         font-size:1.8rem;
+        margin-bottom:10px;
     }
 
-    &:hover &__info{
-        // transition:all 0.5s;
-        // transform:translate(0,0);
+    &__info-icon{
+        margin-top:10px;
+        .icon-font{
+            font-size:1.5rem;
+            margin-right:10px;
+        }
     }
+}
 
-    // &__info--show{
 
-    // }
-   
+.button{
+    background-color:$primary-color-dark;
+    color:$primary-color-light;
+    box-sizing:border-box;
+    padding:5px 10px;
+    display:inline-block;
+    .icon-font{
+        font-size:1.3rem;
+        margin-right:5px;
+    }
+    &:hover{
+        background-color:lightgrey;
+        color:$primary-color-dark;
+        // border:2px solid $primary-color-dark;
+    }
 }
 
 .dot-nav{
     position: fixed;
-    right:calc(15% - 50px);
+    right:8vw;
     // right:0;
     top:50%;
     transform:translate(0,-50%);
@@ -397,46 +438,5 @@ body{
 }
 
 @media all and (max-width:860px){
-    .intro-text{
-        font-size:2rem;
-    }
-
-    .header{
-        height:$header-mobile-height;
-    }
-
-    .header__container{
-        position: absolute;
-        top:50%;
-        transform:translate(0,-50%);
-    }
-
-    .text-logo{
-        transform:translate(0,0);
-        h1{
-            letter-spacing: -0.1rem;
-            font-size:1.3rem;
-            font-weight: 500;
-        }
-    }
-
-    .nav__item{
-        font-size:0.9rem;
-    }
-
-
-    .sub-title__text{
-        font-size:2rem;
-        letter-spacing: 0.5rem;
-        text-shadow:1px 1px 0px rgba(0,0,0,0.5);
-        
-    }
-
-    .sub-left-line{
-        height:100%;
-        width:30px;
-        float:left;
-        background-color:$primary-color-dark;
-    }
-
+  
 }

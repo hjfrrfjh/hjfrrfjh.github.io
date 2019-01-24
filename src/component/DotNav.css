@@ -2,7 +2,7 @@
     height:20px;
     width:20px;
     margin-top:0.5em;
-    background-color:#343434;
+    background-color:#252525;
     border-radius: 50%;
     cursor:pointer;
 }
@@ -14,7 +14,7 @@
 .dot-nav__string{
     position:absolute;
     height:80%;
-    background-color:#343434;
+    background-color:#252525;
     width:0.5em;
     left:50%;
     top:50%;
