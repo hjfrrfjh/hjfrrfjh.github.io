@@ -1,3 +1,5 @@
+'use strict';
+
 export class DotNav{
     constructor(num=0,func=()=>{}){
         this.current=num;

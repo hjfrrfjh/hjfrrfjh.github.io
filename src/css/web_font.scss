@@ -25,7 +25,21 @@
         url('../../fonts/S-CoreDream-4Regular.svg#Montserrat') format('svg'); /* Legacy iOS */
 }
 
+// 아이콘 폰트
+@font-face {
+    font-family: 'fontello';
+    src: url('../../fonts/fontello.eot?85840421');
+    src: url('../../fonts/fontello.eot?85840421#iefix') format('embedded-opentype'),
+    url('../../fonts/fontello.woff?85840421') format('woff'),
+    url('../../fonts/fontello.ttf?85840421') format('truetype'),
+    url('../../fonts/fontello.svg?85840421#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
+.icon-font{
+    font-family: 'fontello';
+}
 
 /* montserrat-500 - latin */
 @font-face {

@@ -36,9 +36,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "hammerjs": "^2.0.8",
     "matter-js": "^0.14.2",
-    "smoothscroll-polyfill": "^0.4.3",
-    "tinygesture": "^1.1.4"
+    "smoothscroll-polyfill": "^0.4.3"
   }
 }
