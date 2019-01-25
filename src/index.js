@@ -14,7 +14,7 @@ import dotnavCSS from './component/DotNav.css';
 import styles from './css/style.scss';
 
 import portfolioPage from './portfolio-page.js';
-
+import skillsPage from './skills-page.js';
 
 window.onload = function () {
 
@@ -24,10 +24,16 @@ window.onload = function () {
         if(info.type=="scroll-start"){
             dotNav.select(info.index);
         }else if(info.type=="scroll-end"){
-            AnimationTrigger.animatePage(scrollPage.getCurrentAnchor());    
+            AnimationTrigger.animatePage(scrollPage.getCurrentAnchor());  
+            if(info.index==3){
+                skillsPage.startGraphAnimation();
+            }  
         }
     })
 
+    if(scrollPage.current==3){
+        skillsPage.startGraphAnimation();
+    }
     AnimationTrigger.animatePage(scrollPage.getCurrentAnchor());
     
     let dotNav = new DotNav(scrollPage.current,(index)=>{
@@ -47,6 +53,7 @@ window.onload = function () {
     
     physicsBox();
     portfolioPage();
+    
 
     document.querySelector('html').style.opacity = "1";
 }

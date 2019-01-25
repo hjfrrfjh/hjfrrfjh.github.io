@@ -1,16 +1,12 @@
 
 $primary-color-dark:#252525;
-// $primary-color-light:lightgrey;
-// $primary-color-dark:#2e3131;
-$primary-color-light:#FAFAFA;
-$point-color:#416686;
-$point-color-light:#88b3a3;
-
-$font-color-light:white;
+$primary-color-light:rgb(251,251,251);
 
 $line:#7c7c7c;
 
 $header-height:40px;
+$header-height-500:60px;
+
 $header-mobile-height:60px;
 $sub-padding-left:4vw;
 
@@ -45,12 +41,8 @@ html{
 
 body{
     font-family: "Montserrat", "S-CoreDream-4Regular";
-    // font-weight: 500;
-    // color:$primary-color-dark;
     color:black;
     background-color:$primary-color-light;
-    // background-image:url('../../img/bg.png');
-    // background-image:url('../../img/bg3.png');
     background-position:center center;
     scroll-behavior: smooth;
     overflow:hidden;
@@ -162,13 +154,14 @@ body{
         display:block;
         font-size:0.55em;
         letter-spacing: -0.11rem;
-        // color:$point-color-light;
     }
 }
 
 .sub{
     height:100vh;
     padding-top:$header-height;
+    padding-bottom:$header-height;
+    
     overflow:auto;
 
     &:before{
@@ -185,27 +178,21 @@ body{
     &__title{
         letter-spacing:1rem;
         font-size:4vw;
-        
-        // border-top:2px solid $primary-color-dark;
         font-weight: 500;
         margin-left:0.5vw;
-        width:80%;
+        
         &-first-char{
             color:$primary-color-light;
         }
-        // color:$point-color;
     }
 
     &__content-wraper{
         padding-left:$sub-padding-left;
         width:calc(92vw - 20px);
-        // padding-left:calc(20vw + #{$sub-padding-left} - 150px);
     }
 
     &__content{
-        // padding:50px;
         padding:3vw;
-        // padding-right:80px;
         box-sizing:border-box;
     }
 }
@@ -287,11 +274,9 @@ body{
     }
 }
 
-.portfolio{
-    // max-width:1200px;
-    // padding-top:30px;
-    // padding-bottom:30px;
 
+.sub__content-wraper--portfolio{
+    text-align:center;
 }
 
 .card{
@@ -299,6 +284,7 @@ body{
     width:300px;
     height:380px;
     margin:10px;
+    text-align:left;
     display:inline-block;
     overflow:hidden;
     box-sizing:border-box;
@@ -412,11 +398,74 @@ body{
         margin-right:5px;
     }
     &:hover{
-        background-color:lightgrey;
-        color:$primary-color-dark;
-        // border:2px solid $primary-color-dark;
+        background-color:rgb(80, 80, 80);
     }
 }
+
+.skills{
+    &__graph{
+        float:left;
+        width:50%;
+        height:100%;
+    }
+    &__right{
+        margin-top:50px;
+        padding:40px;
+        width:50%;
+        float:left;
+    }
+
+}
+
+.bar-graph{
+    padding-top:1rem;
+    padding-left:1rem;
+    padding-right:1rem;
+
+    border-bottom:2px solid $primary-color-dark;
+
+    &__col{
+        float:left;
+        height:70vh;
+        width:13%;
+        margin-left:8.75%;
+        position:relative;
+    }
+    
+    &__col:first-child{
+        margin-left:0;
+    }
+
+
+    &__label{
+        font-size:1.6vw;
+        text-align:center;
+        position:relative;
+        transform:translate(0,-100%);
+        margin-left:-100%;
+        margin-right:-100%;
+    }
+    
+    &__bar{
+        background-color:$primary-color-dark;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        height:0;
+    }
+
+    &__inner-text{
+        position:absolute;
+        font-size:2vw;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        color:$primary-color-light;
+        white-space:nowrap;
+    }
+}
+
+
 
 .dot-nav{
     position: fixed;
@@ -437,6 +486,147 @@ body{
     }
 }
 
-@media all and (max-width:860px){
-  
+// intro 페이지 어긋나는 포인트
+@media all and (max-width:500px){
+    .header{
+        height:$header-height-500;
+    }
+    .text-logo{
+        width:100%;
+        
+        h1 {
+            font-size:1.1rem;
+            padding-left:5px;
+        }
+    }
+    .nav{
+        width:100%;
+        text-align:center;
+        font-size:1.2rem;
+        margin-top:10px;
+        &__item:first-child{
+            margin-left:0;
+        }
+    }
+
+    .sub{
+        padding-top:$header-height-500;
+        padding-bottom:0;
+        &:before{
+            display:none;
+        }
+
+        &__title{
+            letter-spacing:0rem;
+            font-size:1.2rem;
+            font-weight: 500;
+            margin-left:0;
+            padding-left:10px;
+            background-color:$primary-color-dark;
+            color:$primary-color-light;
+        }
+        &__content-wraper{
+            width:100%;
+            padding:0;
+        }
+        &__content{
+            padding:20px;
+        }
+    }
+
+    .about__photo{
+        float:none;
+        width:200px;
+        margin:0 auto;
+        padding:0;
+        display:block;
+    }
+
+    .about__top-text{
+        margin-top:20px;
+    }
+
+    .about__name-container{
+        text-align:center;
+        height:auto;
+    }
+    
+    .about__contact-container{
+        margin-top:10px;
+    }
+
+    .about__url{
+        border-right:none;
+    }
+
+    .intro-page__left-box canvas{
+        display:none;
+    }
+
+    .intro-page__text{
+        font-size:1.8rem;
+    }
+
+    .dot-nav{
+        display:none;
+    }
+}
+
+
+// about 페이지 어긋나는 포인트
+@media all and (max-width:800px){
+    .about__photo{
+        width:150px;
+        margin-right:20px;
+    }
+
+    .about__right {
+        padding:0;
+        float:none;
+        display:inline;
+    }
+
+    .about__top-text{
+        font-size:1.03rem;
+    }
+
+    .about__name{
+        font-size:1.4rem;
+    } 
+
+    .about__underline{
+        display:none;
+    }
+
+    .about__name-container{
+        margin-top:0;
+        height:270px;
+    }
+
+    .about__contact-container{
+        margin-top:20px;
+        width:100%;
+    }
+
+    .about__detail{
+        margin-top:30px;
+    }
+}
+
+// skills 페이지 어긋나는 시점
+@media all and (max-width:900px){
+    .skills__graph{
+        width:100%;
+    }
+    .skills__right{
+        margin-top:0;
+        padding:20px;
+        width:100%;
+    }
+    .bar-graph__label{
+        font-size:1.2rem;
+    }
+    .bar-graph__inner-text{
+        font-size:1.2rem;
+    }
 }

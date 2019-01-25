@@ -1,23 +1,23 @@
 export default {
     animatePage: (elm) => {
         
-        let elements = document.getElementsByClassName("animated");
+        // let elements = document.getElementsByClassName("animated");
         
         // 모든 애니메이션 해제
-        for (let i = 0; i < elements.length; i++) {
-           elements[i].style.animationName = "";
-        }
+        // for (let i = 0; i < elements.length; i++) {
+        //    elements[i].style.animationName = "";
+        // }
 
-
-                
-        elements = elm.getElementsByClassName("animated");
+        let elements = elm.getElementsByClassName("animated");
 
         // 애니메이션 다음에 오는 클래스명으로된 애니메이션 추가
         for (let i = 0; i < elements.length; i++) {
                 let animationType = elements[i].classList[
                     Array.prototype.indexOf.call(elements[i].classList,"animated")+1
                 ];
-                elements[i].style.animationName = animationType;
+                if(elements[i].style.animationName !=animationType){
+                    elements[i].style.animationName = animationType;
+                }
         }
     }
 }
