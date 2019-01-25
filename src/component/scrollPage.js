@@ -1,10 +1,7 @@
-// 'use strict';
-// import smoothscroll from 'smoothscroll-polyfill';
+'use strict';
 import TinyGesture from './TinyGesture.js';
-import {InputController} from './inputController.js';
 import {animate, easeOut} from '../requestAnim.js';
 
-// smoothscroll.polyfill();
 
 
 export class ScrollPage {
@@ -19,6 +16,8 @@ export class ScrollPage {
         this.targetPosition=0;
         this.startPosition=0;
         this.moveDistnace=0;
+
+        this.panmoveDistance;
 
         const gesture = new TinyGesture(document.body);
 
@@ -51,17 +50,32 @@ export class ScrollPage {
 
         gesture.on('panend', () => {
             let anchor = this.getCurrentAnchor();
-            if(gesture.touchMoveY==null) return;                
-
-            if(gesture.touchMoveY>100){
-                if(!this.isTop(anchor)) return;
-                this.scrollPrev();
-            }else if(gesture.touchMoveY<-100){
-                if(!this.isBottom(anchor)) return;
-                this.scrollNext();
+            if(gesture.touchMoveY==null) return; //위아래 이동 없으면 무시
+            if(!this.isTop(anchor)&&!this.isBottom(anchor)) return; //위쪽이나 바닥이 아니면 무시
+            
+            if(Math.abs(gesture.touchMoveY)>=100){
+                if(gesture.touchMoveY>0){
+                    this.scrollPrev(); //이전페이지
+                }else{
+                    this.scrollNext(); //다음페이지 
+                }
             }else{
-                this.scrollPage();
-            }
+                this.scrollPage(); //원래 자리로 이동
+            };
+
+            // if()
+
+            // console.log(gesture.touchMoveY);
+            // if(gesture.touchMoveY>100){
+            //     if(!this.isTop(anchor)) return;
+            //     this.scrollPrev();
+            // }else if(gesture.touchMoveY<-100){
+            //     if(!this.isBottom(anchor)) return;
+            //     this.scrollNext();
+            // }else{
+
+            //     this.scrollPage();
+            // }
         });
 
 
@@ -151,6 +165,8 @@ export class ScrollPage {
             },
             draw:(progress)=>{
                 window.scrollTo(0,this.startPosition+(progress*this.moveDistance));
+                // console.log(this.startPosition + "::" + progress + "::" + this.moveDistance+"::"+(this.startPosition+(progress*this.moveDistance)));
+                // console.log(this.startPosition+(progress*this.moveDistance));
                 if(progress==1){
                     this.moving=false;
                     this.pageChangeLisnter.forEach(listener=>{

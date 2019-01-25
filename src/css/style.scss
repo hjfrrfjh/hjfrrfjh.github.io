@@ -65,7 +65,8 @@ body{
     position:fixed;
     z-index:100;
     width:100%;
-    background-color:$primary-color-light;
+    // background-color:$primary-color-light;
+    background-image:url('../../img/bg.png');
 }
 
 .nav{
