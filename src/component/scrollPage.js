@@ -1,9 +1,10 @@
-'use strict';
-import smoothscroll from 'smoothscroll-polyfill';
+// 'use strict';
+// import smoothscroll from 'smoothscroll-polyfill';
 import TinyGesture from './TinyGesture.js';
 import {InputController} from './inputController.js';
+import {animate, easeOut} from '../requestAnim.js';
 
-smoothscroll.polyfill();
+// smoothscroll.polyfill();
 
 
 export class ScrollPage {
@@ -14,10 +15,14 @@ export class ScrollPage {
         this.timeout = null;
         this.pageChangeLisnter = [];
         this.func = func;
+
         this.targetPosition=0;
+        this.startPosition=0;
+        this.moveDistnace=0;
+
         const gesture = new TinyGesture(document.body);
 
-        //터치 or 클릭시 화면 움직이는 효과
+        // 터치 or 클릭시 화면 움직이는 효과
         gesture.on('panmove',(event)=>{
             if(this.moving) return;
             let offset = gesture.velocityY*-1;
@@ -43,8 +48,11 @@ export class ScrollPage {
         });
 
         //터치 or 드래그 드롭시 페이지 이동
+
         gesture.on('panend', () => {
             let anchor = this.getCurrentAnchor();
+            if(gesture.touchMoveY==null) return;                
+
             if(gesture.touchMoveY>100){
                 if(!this.isTop(anchor)) return;
                 this.scrollPrev();
@@ -58,16 +66,17 @@ export class ScrollPage {
 
 
 
-        window.addEventListener("scroll",(event)=>{
-            if(!this.moving) return;
+        // window.addEventListener("scroll",(event)=>{
+        //     if(!this.moving) return;
 
-            if(this.targetPosition==this.getScrollTop()){
-                this.moving=false;
-                this.pageChangeLisnter.forEach(listener=>{
-                    listener({index:this.current, type:"scroll-end"});
-                });
-            }
-        });
+        //     if(this.targetPosition==this.getScrollTop()){
+        //         this.moving=false;
+        //         this.pageChangeLisnter.forEach(listener=>{
+        //             listener({index:this.current, type:"scroll-end"});
+        //         });
+        //     }
+        // });
+
         // 사이즈 조절될때 자동으로 스크롤
         window.addEventListener("resize", () => {
             window.scrollTo(0, this.getElementOffset(this.anchors[this.current]).top);
@@ -113,6 +122,7 @@ export class ScrollPage {
 
     //특정페이지, 또는 현재 페이지로 이동
     scrollPage(num = this.current,options) {
+        console.log('scroll');
         options = Object.assign({},{moveTop:false,silent:false},options);
         
         if(this.current==num){
@@ -121,16 +131,34 @@ export class ScrollPage {
         }
 
         this.current = num;
+        this.startPosition = this.getScrollTop();
         this.targetPosition = this.getElementOffset(this.anchors[num]).top;
+        this.moveDistance = this.targetPosition - this.getScrollTop();
+        
+
 
         if(options.moveTop){
-            this.getCurrentAnchor().scrollTo(0,0);
+            // console.log(this.getCurrentAnchor());
+            this.getCurrentAnchor().scrollTop=0;
         }
+
         // 페이지 스크롤
-        window.scroll({
-            behavior: "smooth",
-            top: this.targetPosition,
-            left: 0
+        
+
+        animate({
+            timing:(time)=>{
+                return easeOut(time,3);
+            },
+            draw:(progress)=>{
+                window.scrollTo(0,this.startPosition+(progress*this.moveDistance));
+                if(progress==1){
+                    this.moving=false;
+                    this.pageChangeLisnter.forEach(listener=>{
+                        listener({index:this.current, type:"scroll-end"});
+                    });
+                }
+            },
+            duration:800
         });
 
         if(!options.silent){
@@ -184,7 +212,9 @@ export class ScrollPage {
 
     // 현재 스크롤의 위치 리턴
     getScrollTop() {
-        return window.pageYOffset || document.documentElement.scrollTop
+        // return window.pageYOffset || document.documentElement.scrollTop
+        return (document.documentElement && document.documentElement.scrollTop) || 
+              document.body.scrollTop;
     }
 
     // 현재 페이지 리턴

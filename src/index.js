@@ -51,6 +51,9 @@ window.onload = function () {
         });
     });
     
+    document.body.addEventListener("click",()=>{
+        
+    })
     physicsBox();
     portfolioPage();
     
