@@ -68,7 +68,6 @@ window.onload = function () {
     // 트랜지션 해제
     Array.prototype.forEach.call(document.querySelectorAll(".block-transition"),elm=>{
         elm.classList.remove("block-transition");
-        console.log('hi');
     });
 
     //작업 완료후 화면 보여줌

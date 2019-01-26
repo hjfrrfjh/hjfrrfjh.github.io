@@ -31,7 +31,6 @@ class ScrollMover{
                 window.scrollTo(0,this.startPosition+(Math.abs(progress)*this.moveDistance));
                 
                 if(progress==1){
-                    // console.log("complete!");
                     this.startPosition = 0;
                     this.targetPosition = 0;
                     this.moveDistance = 0;
@@ -55,7 +54,6 @@ export class ScrollPage {
         this.current = Math.round(getScrollTop() / window.innerHeight); //스크롤바의 위치를 통해 현재 위치값 계산
         this.anchors = pages;
         this.pageChangeLisnter = [];
-
         this.scrollMover = new ScrollMover();
         const gesture = new TinyGesture(document.body);
 
@@ -90,7 +88,8 @@ export class ScrollPage {
             if(gesture.touchMoveY==null) return; //위아래 이동 없으면 무시
             if(!this.isTop(anchor)&&!this.isBottom(anchor)) return; //위쪽이나 바닥이 아니면 무시
             
-            if(Math.abs(gesture.touchMoveY)>=100){ //100이하의 움직임은 페이지를 이동하지 않도록
+            console.log("쓰레스홀드"+Math.floor(window.innerHeight/10));
+            if(Math.abs(gesture.touchMoveY)>=Math.floor(window.innerHeight/10)){ //100이하의 움직임은 페이지를 이동하지 않도록
                 if(gesture.touchMoveY>0){
                     this.scrollPrev(); //이전페이지
                 }else{
