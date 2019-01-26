@@ -13,9 +13,6 @@ export class DotNav{
         
         for(let i=0;i<this.items.length;i++){
             this.items[i].addEventListener("click",()=>{
-                
-                
-
                 this.select(i);
                 func(i);
             });

@@ -60,7 +60,7 @@ export default function () {
         }
     });
 
-    boxes.push(titleBox);
+    // boxes.push(titleBox);
 
     function pickColor(){
         let colors=[
@@ -85,13 +85,14 @@ export default function () {
 
     // run the renderer
     Render.run(render);
-
-
+    
     function generateBody() {
-        let a = Math.floor(Math.random() * (canvas.offsetWidth-50));
+        let boxWidth = Math.min(Math.round(window.innerWidth / 25),50);
+        boxWidth = Math.max(boxWidth,25);
+        let a = Math.floor(Math.random() * (canvas.offsetWidth-boxWidth));
         let b = Math.floor(Math.random() * -500)-100;
-        let c = Math.floor(Math.random() * 50 + 50);
-        let d = Math.floor(Math.random() * 50 + 50);
+        let c = Math.floor(Math.random() * boxWidth + boxWidth);
+        let d = Math.floor(Math.random() * boxWidth + boxWidth);
         // let c = 80;
         // let d = 80;
         let box = Bodies.rectangle(a, b, c, d, {
@@ -112,22 +113,31 @@ export default function () {
                 return;
             }
             box.render.fillStyle = pickColor();
-            Body.applyForce(box, {x: box.position.x, y: box.position.y}, {x: 0, y: -(Math.floor(Math.random()*2)*0.1+0.1)});
+            
+
+            let force = -(window.innerWidth/80)*0.015
+            console.log(force);
+            
+            // let force = -(Math.floor(Math.random()*2)*0.1+0.1);
+            
+            // console.log(force);
+            Body.applyForce(box, {x: box.position.x, y: box.position.y}, {x: 0, y:force} );
         });
     })
 
-    let resizeTimeOut = null;
-    let resizeDelay = 50;
+    // let resizeTimeOut = null;
+    // let resizeDelay = 50;
 
     window.addEventListener("resize", function () {
+        resizeCanvas();
         // 0.05초 이상 빠르게 실행될경우 무시
-        if (resizeTimeOut == null) {
-            resizeTimeOut = setTimeout(() => {
-                clearTimeout(resizeTimeOut);
-                resizeTimeOut = null
-                resizeCanvas();
-            }, resizeDelay);
-        }
+        // if (resizeTimeOut == null) {
+        //     resizeTimeOut = setTimeout(() => {
+        //         clearTimeout(resizeTimeOut);
+        //         resizeTimeOut = null
+        //         resizeCanvas();
+        //     }, resizeDelay);
+        // }
     });
 
     function resizeCanvas() {
@@ -139,12 +149,12 @@ export default function () {
         // 벽위치 조정
         Body.setPosition(bottomWall, { x: canvas.offsetWidth * 0.5, y: canvas.offsetHeight + 250 });
         Body.setPosition(rightWall, { x: canvas.offsetWidth + 250, y: canvas.offsetHeight * 0.5 });
-        Body.setPosition(titleBox, { x: getCenterOffset(titleElement).left, y: getCenterOffset(titleElement).top });
+        // Body.setPosition(titleBox, { x: getCenterOffset(titleElement).left, y: getCenterOffset(titleElement).top });
 
 
         // 바닥, 텍스트오브젝트 크기조정
         Body.scale(bottomWall, window.innerWidth / prevWidth, 1);
-        Body.scale(titleBox, titleElement.offsetWidth / prevTitleSize.width, titleElement.offsetHeight / prevTitleSize.height);
+        // Body.scale(titleBox, titleElement.offsetWidth / prevTitleSize.width, titleElement.offsetHeight / prevTitleSize.height);
 
         // 현재크기 저장
         prevWidth = window.innerWidth;

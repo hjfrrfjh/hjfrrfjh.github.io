@@ -1,35 +1,37 @@
 'use strict';
 import TinyGesture from './TinyGesture.js';
-import {animate, easeOut, cancel} from '../requestAnim.js';
+import {requestAnimation, easeInOut} from '../requestAnim.js';
 
 
 class ScrollMover{
     constructor(){
         this.startPosition=0;
         this.targetPosition=0;
-        this.moveDistnace=0;
+        this.moveDistance=0;
         this.moving = false;
-        this.animationId = null;
+        this.requestAnimation = requestAnimation();
     }
 
     move({targetElement,endCallback=()=>{},force=false}){
+
         if(force){
-            cancel(this.animationId);
+            this.requestAnimation.stop();
             this.moving=false;
         }
+
         if(this.moving) return;
         this.moving=true;
         this.startPosition = getScrollTop();
         this.targetPosition = getElementOffset(targetElement).top;
         this.moveDistance = this.targetPosition - getScrollTop();
 
-        this.animationId = animate({
-            timing:(timeFraction)=>{
-                return easeOut(timeFraction,3);
-            },
+        this.requestAnimation.animate({
+            timing:easeInOut,
             draw:(progress)=>{
                 window.scrollTo(0,this.startPosition+(Math.abs(progress)*this.moveDistance));
-                  if(progress==1){
+                
+                if(progress==1){
+                    // console.log("complete!");
                     this.startPosition = 0;
                     this.targetPosition = 0;
                     this.moveDistance = 0;
@@ -37,7 +39,7 @@ class ScrollMover{
                     endCallback();
                 }
             },
-            duration:800
+            duration:500
         });
     }
 
@@ -46,16 +48,15 @@ class ScrollMover{
     }
 }
 
+// 파라미터1 - 목표가될 DOM엘리먼트의 콜렉션
 export class ScrollPage {
     constructor(pages = document.getElementsByClassName("scroll-page")) {
 
         this.current = Math.round(getScrollTop() / window.innerHeight); //스크롤바의 위치를 통해 현재 위치값 계산
         this.anchors = pages;
-        this.timeout = null;
         this.pageChangeLisnter = [];
 
         this.scrollMover = new ScrollMover();
-
         const gesture = new TinyGesture(document.body);
 
         // 터치 or 클릭시 화면 움직이는 효과
@@ -89,7 +90,7 @@ export class ScrollPage {
             if(gesture.touchMoveY==null) return; //위아래 이동 없으면 무시
             if(!this.isTop(anchor)&&!this.isBottom(anchor)) return; //위쪽이나 바닥이 아니면 무시
             
-            if(Math.abs(gesture.touchMoveY)>=100){
+            if(Math.abs(gesture.touchMoveY)>=100){ //100이하의 움직임은 페이지를 이동하지 않도록
                 if(gesture.touchMoveY>0){
                     this.scrollPrev(); //이전페이지
                 }else{
@@ -125,6 +126,7 @@ export class ScrollPage {
         });
     }
 
+    // 리스너 추가
     addScrollChangeListener(func){
         this.pageChangeLisnter.push(func);
     }
@@ -141,8 +143,14 @@ export class ScrollPage {
 
     //특정페이지, 또는 현재 페이지로 이동
     scrollPage(num = this.current,options) {
-        console.log('scroll!');
         options = Object.assign({},{moveTop:false,silent:false,force:false},options);
+
+        // 현재위치와 목표위치가 같을경우 수행하지 않음
+        if(getElementOffset(this.anchors[num])==getScrollTop()){
+            return;
+        }
+
+        // 페이지 변경 없을경우 제자리로 
         if(this.current==num){
             this.scrollMover.move({
                 targetElement:this.getCurrentAnchor(),
@@ -155,6 +163,7 @@ export class ScrollPage {
         let anchor = this.getCurrentAnchor();
 
         if(options.moveTop){
+            // 서브페이지의 스크롤을 최상단으로
             anchor.scrollTop=0;
         }
 

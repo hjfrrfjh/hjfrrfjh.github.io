@@ -1,6 +1,7 @@
 export default {
     animatePage: (elm) => {
         
+        // ------------한번 수행하고 멈추도록 주석처리-----------------
         // let elements = document.getElementsByClassName("animated");
         
         // 모든 애니메이션 해제

@@ -1,3 +1,4 @@
+
 window.requestAnimFrame = (function (callback) {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -19,41 +20,60 @@ window.cancelAnimFrame = (function (requestId) {
         function (callback) {window.clearTimeout(requestId) };
 })();
 
-
-export function animate({ timing, draw, duration }) {
-    let start = performance.now();
-    let prevProgress=0;
-    requestAnimFrame(function animate(time) {
-        // timeFraction goes from 0 to 1
-        let timeFraction = (time - start) / duration;
-        if (timeFraction > 1) timeFraction = 1;
-        
-        // calculate the current animation state
-        let calculated = Math.abs(timing(timeFraction));
-        let progress = calculated;
-        
-
-        if(progress > prevProgress) draw(progress); // draw it
-        
-        prevProgress = progress;
-
-        if (timeFraction < 1) {
-            requestAnimFrame(animate);
+export function requestAnimation(){
+        let animationId = null;
+        let endCallback = null;
+        return {
+            animate : ({ timing, draw, duration,callback=()=>{}})=> {
+                endCallback = callback; 
+                let start = performance.now();
+                let prevProgress=0;
+            
+                animationId = requestAnimFrame(function animate(time) {
+                    let timeFraction = (time - start) / duration;
+                    if (timeFraction > 1) timeFraction = 1;
+                    
+                    let calculated = Math.abs(timing(timeFraction));
+                    let progress = calculated;
+                    
+            
+                    if(progress > prevProgress) draw(progress);
+                    
+                    prevProgress = progress;
+            
+                    if (timeFraction < 1) {
+                        animationId = requestAnimFrame(animate);
+                        endCallback();
+                    }
+                });
+            },
+            stop:()=>{
+                endCallback=null;
+                cancelAnimFrame(animationId);
+            }
         }
-
-    });
 }
 
-export function cancel(requestId){
-    cancelAnimFrame(requestId);
-}
 
+// 
 export function linear(timeFraction){
     return timeFraction;
 }
 
-//ease-out 설정
-export function easeOut(timeFraction, num=2){
-    return 1 - Math.pow(1-timeFraction, num);
+export function easeOut(timeFraction, power=2){
+    return 1 - Math.pow(1-timeFraction, power);
 }
+
+export function easeIn(timeFraction, power=2){
+    return Math.pow(timeFraction, power)
+}
+
+export function easeInOut(timeFraction,power=2) {
+    if (timeFraction < .5){
+        return Math.pow(2 * timeFraction,power) / 2;
+    }else{
+        return (2 - Math.pow(2 * (1 - timeFraction),power)) / 2;
+    }
+}
+
 

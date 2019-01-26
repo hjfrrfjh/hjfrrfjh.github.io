@@ -1,8 +1,10 @@
 
 $primary-color-dark:#252525;
+$primary-color-dark-minus1:#4d4d4d;
+$primary-color-dark-minus2:#747474;
 $primary-color-light:rgb(251,251,251);
 
-$line:#7c7c7c;
+$line:#3d3d3d;
 
 $header-height:40px;
 $header-height-500:60px;
@@ -49,9 +51,11 @@ body{
 }
 
 .text-logo{
-    transform:translate(-3px,0);
+    
     display:inline-block;
     vertical-align:middle;
+    transition: color  0.2s;
+    margin-left:0.5vw;
 
     h1{
         letter-spacing: -0.1rem;
@@ -66,21 +70,30 @@ body{
     z-index:100;
     width:100%;
     background-color:$primary-color-light;
+
+    transition:background-color 0.7s;
     // background-image:url('../../img/bg.png');
 }
 
+.header--darker{
+    color:$primary-color-light;
+    background-color:$primary-color-dark;
+}
+
 .nav{
-    position:relative;
     display:inline-block;
     vertical-align: middle;
     font-weight: 500;
 
     &__item{
         margin-left:20px;
-        position: relative;
     }
+}
 
-    &__item:before{
+.slide-link{
+    position: relative;
+
+    &:before{
         content:'';
         display:inline-block;
         background-color:$primary-color-dark;
@@ -92,20 +105,31 @@ body{
         transition: height 0.2s ease-out;
         z-index:-1;
     }
-
-    &__item-text{
+    
+    &--darker:before{
+        background-color:$primary-color-light;
+    }
+    
+    &__text{
         transition: color 0.2s ease-out;
+        &--draker{
+            color:$primary-color-light;
+        }
     }
 
-    &__item:hover:before{
+    &:hover:before{
         height:100%;
     }
 
-    &__item:hover &__item-text{
+    &:hover &__text{
         color:$primary-color-light;
+    }
 
+    &--darker:hover &__text{
+        color:$primary-color-dark;
     }
 }
+
 
 .intro-page{
     height:100vh;
@@ -138,7 +162,7 @@ body{
     color:$primary-color-light;
     letter-spacing: -0.1rem;
     font-size:4.5vw;
-    text-shadow:1px 1px 0px rgba(0,0,0,0.5);
+    // text-shadow:1px 1px 0px rgba(0,0,0,0.5);
     margin-left:-0.22em;
     font-weight: normal;
     white-space:nowrap;
@@ -194,7 +218,6 @@ body{
 
     &__content{
         padding:3vw;
-        box-sizing:border-box;
     }
 }
 
@@ -209,13 +232,14 @@ body{
         width: calc(100% - 300px);
         float:left;
         padding-left:50px;
-        box-sizing:border-box;
     }
 
     &__top-text{
         font-weight: normal;
         padding-bottom:3px;
         border-bottom:2px solid $line;
+        // background-color:$primary-color-dark;
+        // color:white;
         margin-top:50px;
         display:inline-block;
     }
@@ -236,23 +260,23 @@ body{
 
     &__contact-container{
         margin-top:150px;
-        width:100%;
+        // width:100%;
+        // width:100%;
+        max-width:calc(1200px - 300px);
     }
 
     &__url{
         float:left;
         width:50%;
         padding:20px 0;
-        box-sizing:border-box;
         text-align:center;
-        border-right:2px solid $line;
+        // border-right:2px solid $line;
     }
     
     &__sns{
         float:left;
         width:50%;
         padding:20px 0;
-        box-sizing:border-box;
         text-align:center;
         a i{
             font-size:1.5rem;
@@ -288,8 +312,8 @@ body{
     text-align:left;
     display:inline-block;
     overflow:hidden;
-    box-sizing:border-box;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    // box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border:1px solid #bbbbbb;
 
     
     &__container{
@@ -319,7 +343,6 @@ body{
         font-size:1.2rem;
         font-weight: bold;
         float:left;
-        box-sizing:border-box;
         // color:$point-color;
         &:hover{
             color:$primary-color-light;
@@ -391,7 +414,6 @@ body{
 .button{
     background-color:$primary-color-dark;
     color:$primary-color-light;
-    box-sizing:border-box;
     padding:5px 10px;
     display:inline-block;
     .icon-font{
@@ -511,18 +533,24 @@ body{
 @media all and (max-width:800px){
     .about{
         &__photo{
-            width:150px;
-            margin-right:20px;
+            width:45%;
+            margin-top: calc(200px - 30%);
         }
     
-        &__right {
-            padding:0;
-            float:none;
-            display:inline;
+        // &__right {
+        //     padding:0;
+        //     float:none;
+        //     display:inline;
+        // }
+
+        &__right{
+            width:50%;
         }
     
         &__top-text{
             font-size:1.03rem;
+            margin-top: calc(180px - 60%);
+            white-space: nowrap;
         }
     
         &__name{
@@ -539,7 +567,14 @@ body{
         }
     
         &__contact-container{
-            margin-top:20px;
+            margin-top: calc(90% - 200px);
+            width:100%;
+        }
+
+        &__url{
+            width:100%;
+        }
+        &__sns{
             width:100%;
         }
     
@@ -586,9 +621,14 @@ body{
             font-weight: 500;
             margin-left:0;
             padding-left:10px;
-            background-color:$primary-color-dark;
-            color:$primary-color-light;
+            // background-color:$primary-color-dark;
+            &-first-char{
+                color:$primary-color-dark;
+                padding-left:10px;
+                border-left:10px solid black;
+            }
         }
+        
         &__content-wraper{
             width:100%;
             padding:0;
@@ -598,6 +638,52 @@ body{
         }
     }
 
+    .intro-page__left-box {
+        width:100%;
+        canvas{
+            // display:none;
+        }
+    }
+
+    .intro-page__right-box{
+        display:none;
+    }
+
+    .intro-page__text{
+        font-size:9vw;
+    }
+
+    .intro-text{
+        width:100%;
+        padding:0;
+        margin:0;
+        padding-left:10%;
+
+        &__left{
+            color:$primary-color-light;
+            padding:0;
+            margin:0;
+        }
+        &__right{
+            color:$primary-color-light;
+            display:block;
+            text-align:right;
+            padding-right:10%;
+            margin-top:3vw;
+            // left:-30%;
+            // top:30%;
+            // padding:0;
+            border:none;
+        }
+        &__below{
+            color:$primary-color-light;
+            position: relative;;
+            top:-16vw;
+            padding-left:2px;
+        }
+    }
+
+
     .about__photo{
         float:none;
         width:200px;
@@ -605,7 +691,10 @@ body{
         padding:0;
         display:block;
     }
-
+    .about__right{
+        width:100%;
+        padding:0;
+    }
     .about__top-text{
         margin-top:20px;
     }
@@ -618,21 +707,23 @@ body{
     .about__contact-container{
         margin-top:10px;
     }
-
+    
     .about__url{
-        border-right:none;
+        width:50%;
     }
 
-    .intro-page__left-box canvas{
-        display:none;
+    .about__sns{
+        width:50%;
     }
 
-    .intro-page__text{
-        font-size:1.8rem;
-    }
+
 
     .dot-nav{
         display:none;
     }
 }
 
+// 트랜지션 일시 해제
+.block-transition{
+    transition:none;
+}

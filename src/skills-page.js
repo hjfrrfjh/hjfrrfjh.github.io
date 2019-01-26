@@ -1,4 +1,4 @@
-import {animate} from './requestAnim.js';
+import {requestAnimation} from './requestAnim.js';
 
 let graphAnimationFlag = false;
 
@@ -12,7 +12,8 @@ export default {
             let innerText = bar.getElementsByClassName("bar-graph__inner-text")[0];
             let currentValue = 0;
 
-            setTimeout(() => animate({
+            
+            setTimeout(() => requestAnimation().animate({
                 timing: timeFraction => { //ease-out 설정
                     timeFraction = 1 - timeFraction
                     return 1 - Math.pow(timeFraction, 5);
