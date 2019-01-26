@@ -4,28 +4,48 @@ window.requestAnimFrame = (function (callback) {
         window.mozRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
-        function (callback) { window.setTimeout(callback, 1000 / 60); };
+        function (callback) {
+            return window.setTimeout(callback, 1000 / 60);
+        };
+})();
+
+
+window.cancelAnimFrame = (function (requestId) {
+    return window.cancelAnimationFrame ||
+        window.webkitCancelAnimationFrame ||
+        window.mozCancelAnimationFrame ||
+        window.oCancelAnimationFrame ||
+        window.msCancelAnimationFrame ||
+        function (callback) {window.clearTimeout(requestId) };
 })();
 
 
 export function animate({ timing, draw, duration }) {
     let start = performance.now();
-
+    let prevProgress=0;
     requestAnimFrame(function animate(time) {
         // timeFraction goes from 0 to 1
         let timeFraction = (time - start) / duration;
         if (timeFraction > 1) timeFraction = 1;
-
+        
         // calculate the current animation state
-        let progress = timing(timeFraction)
+        let calculated = Math.abs(timing(timeFraction));
+        let progress = calculated;
+        
 
-        draw(progress); // draw it
+        if(progress > prevProgress) draw(progress); // draw it
+        
+        prevProgress = progress;
 
         if (timeFraction < 1) {
             requestAnimFrame(animate);
         }
 
     });
+}
+
+export function cancel(requestId){
+    cancelAnimFrame(requestId);
 }
 
 export function linear(timeFraction){

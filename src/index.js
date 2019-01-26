@@ -47,7 +47,7 @@ window.onload = function () {
     ].forEach((elm,index)=>{
         elm.addEventListener("click",(e)=>{
             e.preventDefault();
-            scrollPage.scrollPage(index,{moveTop:true});
+            scrollPage.scrollPage(index,{moveTop:true,force:true});
         });
     });
     

@@ -1,6 +1,6 @@
 'use strict';
 import TinyGesture from './TinyGesture.js';
-import {animate, easeOut} from '../requestAnim.js';
+import {animate, easeOut, cancel} from '../requestAnim.js';
 
 
 class ScrollMover{
@@ -9,21 +9,26 @@ class ScrollMover{
         this.targetPosition=0;
         this.moveDistnace=0;
         this.moving = false;
+        this.animationId = null;
     }
 
-    move({targetElement,endCallback=()=>{}}){
+    move({targetElement,endCallback=()=>{},force=false}){
+        if(force){
+            cancel(this.animationId);
+            this.moving=false;
+        }
         if(this.moving) return;
         this.moving=true;
         this.startPosition = getScrollTop();
         this.targetPosition = getElementOffset(targetElement).top;
         this.moveDistance = this.targetPosition - getScrollTop();
 
-        animate({
+        this.animationId = animate({
             timing:(timeFraction)=>{
                 return easeOut(timeFraction,3);
             },
             draw:(progress)=>{
-                window.scrollTo(0,this.startPosition+(progress*this.moveDistance));
+                window.scrollTo(0,this.startPosition+(Math.abs(progress)*this.moveDistance));
                   if(progress==1){
                     this.startPosition = 0;
                     this.targetPosition = 0;
@@ -43,6 +48,7 @@ class ScrollMover{
 
 export class ScrollPage {
     constructor(pages = document.getElementsByClassName("scroll-page")) {
+
         this.current = Math.round(getScrollTop() / window.innerHeight); //스크롤바의 위치를 통해 현재 위치값 계산
         this.anchors = pages;
         this.timeout = null;
@@ -135,11 +141,12 @@ export class ScrollPage {
 
     //특정페이지, 또는 현재 페이지로 이동
     scrollPage(num = this.current,options) {
-        options = Object.assign({},{moveTop:false,silent:false},options);
-        
+        console.log('scroll!');
+        options = Object.assign({},{moveTop:false,silent:false,force:false},options);
         if(this.current==num){
             this.scrollMover.move({
-                targetElement:this.getCurrentAnchor()
+                targetElement:this.getCurrentAnchor(),
+                force:options.force
             });
             return;
         }
@@ -158,7 +165,8 @@ export class ScrollPage {
                 this.pageChangeLisnter.forEach(listener=>{
                     listener({index:this.current, type:"scroll-end"}); //이벤트 콜백 호출 
                 });
-            }
+            },
+            force:options.force
         });
 
         if(!options.silent){
