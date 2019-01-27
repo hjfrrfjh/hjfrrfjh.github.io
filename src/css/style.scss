@@ -11,6 +11,7 @@ $header-height-500:60px;
 
 $header-mobile-height:60px;
 $sub-padding-left:4vw;
+$footer-height:50px;
 
 *{
     padding:0;
@@ -232,7 +233,7 @@ body{
     &__right{
         width: calc(100% - 300px);
         float:left;
-        padding-left:50px;
+        padding-left:100px;
     }
 
     &__top-text{
@@ -270,7 +271,7 @@ body{
         float:left;
         width:50%;
         padding:20px 0;
-        text-align:center;
+        // text-align:center;
         // border-right:2px solid $line;
     }
     
@@ -278,7 +279,7 @@ body{
         float:left;
         width:50%;
         padding:20px 0;
-        text-align:center;
+        // text-align:center;
         a i{
             font-size:1.5rem;
             margin-left:20px;
@@ -297,12 +298,14 @@ body{
         text-indent:1rem;
         margin-top:70px;
         max-width:1120px;
+        word-spacing: 3px;
+        line-height:180%;
     }
 }
 
 
 .sub__content-wraper--portfolio{
-    text-align:center;
+    // text-align:center;
 }
 
 .card{
@@ -437,6 +440,8 @@ body{
         padding:40px;
         width:50%;
         float:left;
+        word-spacing: 3px;
+        line-height: 180%;
     }
 
 }
@@ -445,12 +450,11 @@ body{
     padding-top:1rem;
     padding-left:1rem;
     padding-right:1rem;
-
     border-bottom:2px solid $primary-color-dark;
-
+    height:70vh;
     &__col{
         float:left;
-        height:70vh;
+        height:100%;
         width:13%;
         margin-left:8.75%;
         position:relative;
@@ -489,7 +493,11 @@ body{
     }
 }
 
-
+.footer{
+    clear:both;
+    text-align:center;
+    margin-top:30px;
+}
 
 .dot-nav{
     position: fixed;
@@ -526,6 +534,10 @@ body{
     .bar-graph__inner-text{
         font-size:1.2rem;
     }
+
+    .sub__content-wraper--portfolio{
+        text-align:center;
+    }
 }
 
 
@@ -546,6 +558,7 @@ body{
 
         &__right{
             width:50%;
+            padding-left:50px;
         }
     
         &__top-text{
@@ -570,6 +583,7 @@ body{
         &__contact-container{
             margin-top: calc(90% - 200px);
             width:100%;
+            text-align:center;
         }
 
         &__url{
@@ -583,7 +597,7 @@ body{
             margin-top:30px;
         }
     }
-    
+
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media all and (max-width:500px){
@@ -722,6 +736,11 @@ body{
     .dot-nav{
         display:none;
     }
+
+    .skills__right{
+        margin-bottom:$footer-height;
+    }
+
 }
 
 // 트랜지션 일시 해제
