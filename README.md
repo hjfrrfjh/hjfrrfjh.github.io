@@ -2,7 +2,7 @@
 개인 포트폴리오 사이트 입니다
 
 ---
-##credit
+## credit
 
 tiny-gesture
 https://github.com/sciactive/tinygesture
