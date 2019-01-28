@@ -27,7 +27,7 @@ export default {
                     }
                     
                     bar.style.height = progress + "%";
-                    innerText.innerText = progress;
+                    innerText.innerText = progress +"%";
 
                     currentValue = progress;
                 },

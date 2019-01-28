@@ -38,8 +38,55 @@
 }
 
 .icon-font{
-    font-family: 'fontello';
+    i{
+        font-family: 'fontello';
+        vertical-align: middle;
+        margin-right:5px;
+    }
+
+    &__text{
+        vertical-align: middle;
+    }
+
+    &__close:before{
+        content: '\e800';
+    }
+    
+    &__go:before{
+        content: '\e801';
+    }
+    
+    &__mail:before{
+        content: '\e802';
+    }
+    
+    &__firefox:before{
+        content: '\e840'
+    }
+    
+    &__chrome:before{
+        content: '\e841'
+    }
+    
+    &__ie:before{
+        content: '\e843'
+    }
+    
+    &__github:before{
+        content:'\f056';
+    }
+
+    &__instagram:before{
+        content: '\f31e'
+    }
+
+    &__resume:before{
+        content: '\e803'
+    }
+
+
 }
+
 
 /* montserrat-500 - latin */
 @font-face {

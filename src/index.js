@@ -70,6 +70,20 @@ window.onload = function () {
         elm.classList.remove("block-transition");
     });
 
+    let mailLayout =  document.getElementById("mail_layout");
+    document.getElementById("contact_button").addEventListener("click",(ev)=>{
+        ev.preventDefault();
+       mailLayout.classList.add("mail-layout--showing");
+       document.getElementById("mail_sender").focus();
+    })
+    mailLayout.addEventListener("click",()=>{
+        mailLayout.classList.remove("mail-layout--showing");
+    })
+    document.getElementsByClassName("mail-layout__container")[0].addEventListener("click",ev=>{
+        ev.stopPropagation();
+    });
+    // stopPropagation()
+    
     //작업 완료후 화면 보여줌
     document.querySelector('html').style.opacity = "1";
 }

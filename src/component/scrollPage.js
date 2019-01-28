@@ -88,7 +88,6 @@ export class ScrollPage {
             if(gesture.touchMoveY==null) return; //위아래 이동 없으면 무시
             if(!this.isTop(anchor)&&!this.isBottom(anchor)) return; //위쪽이나 바닥이 아니면 무시
             
-            console.log("쓰레스홀드"+Math.floor(window.innerHeight/10));
             if(Math.abs(gesture.touchMoveY)>=Math.floor(window.innerHeight/10)){ //100이하의 움직임은 페이지를 이동하지 않도록
                 if(gesture.touchMoveY>0){
                     this.scrollPrev(); //이전페이지
