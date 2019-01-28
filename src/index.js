@@ -70,19 +70,27 @@ window.onload = function () {
         elm.classList.remove("block-transition");
     });
 
+    // 메일 레이아웃
     let mailLayout =  document.getElementById("mail_layout");
     document.getElementById("contact_button").addEventListener("click",(ev)=>{
         ev.preventDefault();
        mailLayout.classList.add("mail-layout--showing");
        document.getElementById("mail_sender").focus();
+       history.pushState(null, null, location.href); //뒤로가기 버튼을 위해 
     })
+    
+    window.onpopstate = function () {
+        mailLayout.classList.remove("mail-layout--showing");
+    };
+
     mailLayout.addEventListener("click",()=>{
         mailLayout.classList.remove("mail-layout--showing");
+        history.back();
     })
     document.getElementsByClassName("mail-layout__container")[0].addEventListener("click",ev=>{
         ev.stopPropagation();
     });
-    // stopPropagation()
+    
     
     //작업 완료후 화면 보여줌
     document.querySelector('html').style.opacity = "1";
