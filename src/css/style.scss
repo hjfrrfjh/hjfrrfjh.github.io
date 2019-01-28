@@ -290,12 +290,15 @@ body{
 
         a i{
             font-size:1.5rem;
-            // margin-left:20px;
             
         }
         a:first-child i{
             // margin-left:0;
             margin-top:0;
+        }
+
+        .icon-font__text--bold{
+            font-weight:bold;
         }
     }
 
@@ -306,10 +309,28 @@ body{
 
     &__detail{
         // text-indent:1rem;
-        margin-top:70px;
+        margin-top:20px;
         max-width:1120px;
+    }
+
+    &__detail-title{
+        padding:0 20px;
+        border-left:5px solid black;
+    }
+
+    &__detail-content{
+        margin-top:20px;
+        padding-left:20px;
         word-spacing: 3px;
         line-height:180%;
+        strong{
+            display:inline-block;
+            margin-top:5px;
+        }
+    }
+    &__detail-title:before{
+        content:'';
+        
     }
 }
 
@@ -870,8 +891,8 @@ body{
         // margin-top:10px;
         text-align:center;
         width:100%;
-        .icon_font{
-            margin:0;
+        font-size:1rem;
+        .icon-font{
             margin-left:5px;
         }
     }
