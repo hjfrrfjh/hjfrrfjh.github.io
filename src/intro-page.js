@@ -44,8 +44,7 @@ export default function () {
     let bottomWall = Bodies.rectangle(canvas.offsetWidth * 0.5, canvas.offsetHeight + 250, canvas.offsetWidth, 500, walloption);
     let leftWall = Bodies.rectangle(-250, canvas.offsetHeight * 0.5, 500, 5000, walloption);
     let rightWall = Bodies.rectangle(canvas.offsetWidth + 250, canvas.offsetHeight * 0.5, 500, 5000, walloption);
-    // let leftWall = Bodies.rectangle(-250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
-    // let rightWall = Bodies.rectangle(canvas.offsetWidth + 250, canvas.offsetHeight * 0.5, 500, canvas.offsetHeight, walloption);
+
 
     boxes.push(rightWall);
     boxes.push(leftWall);
@@ -60,7 +59,11 @@ export default function () {
         }
     });
 
-    // boxes.push(titleBox);
+    if(window.innerWidth>500){
+        console.log('ok');
+        boxes.push(titleBox);
+    }
+    
 
     function pickColor(){
         let colors=[
@@ -116,8 +119,6 @@ export default function () {
             
 
             let force = -(window.innerWidth/80)*0.015
-            console.log(force);
-            
             // let force = -(Math.floor(Math.random()*2)*0.1+0.1);
             
             // console.log(force);
@@ -149,12 +150,12 @@ export default function () {
         // 벽위치 조정
         Body.setPosition(bottomWall, { x: canvas.offsetWidth * 0.5, y: canvas.offsetHeight + 250 });
         Body.setPosition(rightWall, { x: canvas.offsetWidth + 250, y: canvas.offsetHeight * 0.5 });
-        // Body.setPosition(titleBox, { x: getCenterOffset(titleElement).left, y: getCenterOffset(titleElement).top });
+        Body.setPosition(titleBox, { x: getCenterOffset(titleElement).left, y: getCenterOffset(titleElement).top });
 
 
         // 바닥, 텍스트오브젝트 크기조정
         Body.scale(bottomWall, window.innerWidth / prevWidth, 1);
-        // Body.scale(titleBox, titleElement.offsetWidth / prevTitleSize.width, titleElement.offsetHeight / prevTitleSize.height);
+        Body.scale(titleBox, titleElement.offsetWidth / prevTitleSize.width, titleElement.offsetHeight / prevTitleSize.height);
 
         // 현재크기 저장
         prevWidth = window.innerWidth;
