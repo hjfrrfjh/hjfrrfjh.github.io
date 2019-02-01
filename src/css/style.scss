@@ -453,6 +453,23 @@ body{
             margin-right:10px;
         }
     }
+    
+    &:nth-child(2n){
+        border:1px solid #cecece;
+        .card__body{
+            border-top:1px solid lightgrey;
+            background-color:$primary-color-dark;
+            color:$primary-color-light;
+        }
+    
+        .button{
+            width:40%;
+            border:1px solid $primary-color-light;
+        }
+        .icon-font__dot3{
+            font-size:2em;
+        }
+    }
 }
 
 
